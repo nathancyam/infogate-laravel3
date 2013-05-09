@@ -238,3 +238,7 @@ Route::group(array('before'=>'auth'), function(){
         return Redirect::to('courses');
     }));
 });
+
+Route::get('navigation', function(){
+    $user = Auth::user();
+});
