@@ -25,6 +25,17 @@ Route::filter('after', function($response)
     // Do stuff after every request to your application...
 });
 
+View::composer('template.navigation', function($view){
+    $enrollCourse = User::find(Auth::user()->id)->enrollment()->first();
+    $courseCode = $enrollCourse->course()->first();
+    $subjects = $courseCode->subjects()->get();
+    $data = array(
+        'code' => $courseCode->code,
+        'subjects' => $subjects
+    );
+    $view->with($data);
+});
+
 Route::filter('csrf', function()
 {
     if (Request::forged()) return Response::error('500');
@@ -38,7 +49,7 @@ Route::filter('auth', function()
 Route::filter('admin', function(){
     $user = Auth::user();
     if($user->role !== 'admin'){
-        return Redirect::to('/');
+        return Redirect::to('login');
     }
 });
 

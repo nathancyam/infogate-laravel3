@@ -16,6 +16,9 @@
         <h1>Wordpush</h1>
         <h2>Code is Limmericks</h2>
     </div>
+    <nav>
+        @render('template.navigation')
+    </nav>
     <div class="content">
         @yield('content')
     </div>
