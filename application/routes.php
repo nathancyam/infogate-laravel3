@@ -184,7 +184,7 @@ Route::get('(:any)/(:any)/topic/new', function($course, $subject){
     return View::make('forms.topic',$data);
 });
 
-// Create a new post for the topic in the URI
+// Create a new topic for the topic in the URI
 Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','do'=>function($course, $subject){
     $data = array(
         'name' => Input::get('name'),
@@ -197,3 +197,42 @@ Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','do'=>function($co
 }));
 
 // =================== END TOPICS ===================
+
+// =================== POSTS ===================
+
+// List all posts
+Route::get('(:any)/(:any)/(:any)/posts', array('as'=>'listposts', 'do'=>function ($course, $subject, $topic){
+    $linkTopic = Topic::find($topic);
+    $posts = Post::where('topic_id','=',$linkTopic->id)->get();
+
+    return View::make('main.posts')
+        ->with('posts', $posts);
+}));
+
+// Show the new post form for the topic in the URI
+Route::get('(:any)/(:any)/(:any)/post/new', function($course, $subject, $topic_id){
+    $user = Auth::user();
+    $topic = Topic::find($topic_id);
+
+    $data = array(
+        'user' => $user,
+        'topic' => $topic
+    );
+
+    return View::make('forms.post',$data);
+});
+
+// Create a new post for the topic in the URI
+Route::post('(:any)/(:any)/(:any)/post/new', array('as'=>'newpost','do'=>function($course, $subject, $topic){
+    $data = array(
+        'title' => Input::get('title'),
+        'body' => Input::get('body'),
+        'topic_id' => Input::get('topic_id'),
+        'author_id' => Input::get('author_id')
+    );
+    $post = new Post($data);
+    $post->save();
+    return Redirect::to('courses');
+}));
+
+// =================== END POSTS ===================
