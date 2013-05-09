@@ -239,6 +239,13 @@ Route::group(array('before'=>'auth'), function(){
     }));
 });
 
-Route::get('navigation', function(){
-    $user = Auth::user();
-});
+Route::get('navigation', array('before'=>'auth','as'=>'navmenu','do'=>function(){
+    $enrollCourse = User::find(Auth::user()->id)->enrollment()->first();
+    $courseCode = $enrollCourse->course()->first();
+    $subjects = $courseCode->subjects()->get();
+    $data = array(
+        'code' => $courseCode->code,
+        'subjects' => $subjects
+    );
+    return View::make('template.navigation', $data);
+}));

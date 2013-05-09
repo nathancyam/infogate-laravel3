@@ -7,6 +7,10 @@ class User extends Eloquent {
         return $this->has_many('Post');
     }
 
+    public function enrollment(){
+        return $this->has_one('Enrollment');
+    }
+
     public function set_username($forename, $surname){
         $this->set_attribute('username', strtolower(substr($forename,0,2) . substr($surname,0,4)));
     }

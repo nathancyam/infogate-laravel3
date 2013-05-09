@@ -72,7 +72,7 @@ return array(
 			'host'     => 'localhost',
 			'database' => 'infogate-laravel',
 			'username' => 'root',
-			'password' => 'blacklagoon',
+			'password' => 'root',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 		),
