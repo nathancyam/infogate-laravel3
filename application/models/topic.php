@@ -6,5 +6,9 @@ class Topic extends Eloquent {
     {
         return $this->belongs_to('Subject');
     }
+    public function posts()
+    {
+        return $this->has_many('Posts');
+    }
 
 }

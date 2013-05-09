@@ -2,10 +2,12 @@
 
 @section('content')
 
-<p>{{ $code }}</p>
-
-@foreach($subjects as $subject)
-    <p>{{ HTML::link($subject->name) }}</p>
-@endforeach
-
+<nav>
+    <p>{{ $code }}</p>
+    <ul class='navigation'>
+        @foreach($subjects as $subject)
+            <li>{{ HTML::link($subject->name) }}</li>
+        @endforeach
+    </ul>
+</nav>
 @endsection
