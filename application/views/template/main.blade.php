@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Wordpush</title>
     {{ HTML::style('css/style.css') }}
+    {{ Asset::container('bootstrapper')->styles() }}
+    {{ Asset::container('bootstrapper')->scripts() }}
 </head>
 <body>
     <div class="header">
