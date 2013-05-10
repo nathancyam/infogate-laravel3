@@ -127,8 +127,10 @@ Route::group(array('before'=>'auth|admin'), function(){
 
     // Show the new course form
     Route::get('course/new', array('as'=>'newcourse', 'do'=>function(){
-        $user = auth::user();
+        $isNew = true;
+        $user = Auth::user();
         return view::make('forms.course')
+            ->with('isNew', $isNew)
             ->with('user', $user);
     }));
 
@@ -142,6 +144,25 @@ Route::group(array('before'=>'auth|admin'), function(){
         $course = new Course($new_course);
         $course->save();
         return Redirect::to('courses');
+    }));
+
+    Route::get('course/(:any)/edit', array('as'=>'editcourse', 'do'=>function($code){
+        $isNew = false;
+        $user = Auth::user();
+        $get_course = Course::where('code','=',$code)->first();
+        $data = array(
+            'user' => $user,
+            'isNew' => $isNew,
+            'name' => $get_course->name,
+            'code' => $get_course->code);
+        return View::make('forms.course', $data);
+    }));
+
+    Route::put('course/edit', array('as'=>'editcourse', 'do'=>function(){
+        $edit_course = array(
+            'name' => Input::get('name'),
+            'code' => Input::get('code'),
+            'coordinator_id' => Input::get('coordinator_id'));
     }));
 
     // =================== SUBJECT ===================
