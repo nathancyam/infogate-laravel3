@@ -2,7 +2,7 @@
 @section('content')
     {{ Form::open(URL::current()) }}
 
-        {{ Form::hidden('subject',$subject) }}
+        {{ Form::hidden('subject_id', $subject->id) }}
 
         <p>{{ Form::label('name', 'Name of Topic') }}</p>
         <p>{{ Form::text('name', Input::old('name')) }}</p>

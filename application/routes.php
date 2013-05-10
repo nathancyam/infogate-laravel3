@@ -207,9 +207,10 @@ Route::group(array('before'=>'auth|admin'), function(){
 
     // Show the new topic form for the course in the URI
     Route::get('(:any)/(:any)/topic/new', function($course, $subject){
+        $details = Subject::where('code','=',$subject)->first();
         $data = array(
             'course' => $course,
-            'subject' => $subject
+            'subject' => $details
         );
         return View::make('forms.topic',$data);
     });
@@ -219,7 +220,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         $new_topic = array(
             'name' => Input::get('name'),
             'content' => Input::get('content'),
-            'subject_id' => Input::get('subject')
+            'subject_id' => Input::get('subject_id')
         );
         $rules = array(
                 'name' => 'required',
@@ -227,6 +228,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         );
         $v = Validator::make($new_topic, $rules);
         if($v->fails()){
+
             return Redirect::to(URL::current())
                 ->with_errors($v)
                 ->with_input();
@@ -250,7 +252,7 @@ Route::group(array('before'=>'auth'), function(){
     }));
 
     // Show the new post form for the topic in the URI
-    Route::get('(:any)/(:any)/(:any)/post/new', function($course, $subject, $topic_id){
+    Route::get('(:any)/(:any)/(:any)/posts/new', function($course, $subject, $topic_id){
         $user = Auth::user();
         $topic = Topic::find($topic_id);
 
@@ -263,16 +265,25 @@ Route::group(array('before'=>'auth'), function(){
     });
 
     // Create a new post for the topic in the URI
-    Route::post('(:any)/(:any)/(:any)/post/new', array('as'=>'newpost','do'=>function($course, $subject, $topic){
-        $data = array(
+    Route::post('(:any)/(:any)/(:any)/posts/new', array('as'=>'newpost','do'=>function($course, $subject, $topic){
+        $new_post = array(
             'title' => Input::get('title'),
             'body' => Input::get('body'),
             'topic_id' => Input::get('topic_id'),
             'author_id' => Input::get('author_id')
         );
-        $post = new Post($data);
+        $rules = array(
+            'body' => 'required'
+        );
+        $v = Validator::make($new_post, $rules);
+        if($v->fails()){
+            return Redirect::to(URL::current())
+                ->with_errors($v)
+                ->with_input();
+        }
+        $post = new Post($new_post);
         $post->save();
-        return Redirect::to('courses');
+        return Redirect::to(URL::to_route('listposts', array($course, $subject, $topic)));
     }));
 });
 
