@@ -67,7 +67,7 @@ Route::post('login', function(){
         'password'=>Input::get('password')
     );
     if(Auth::attempt($userdata)){
-        return Redirect::to('courses');
+        return Redirect::to('/');
     } else {
         return Redirect::to('login')
             ->with('login_errors', true);
@@ -119,11 +119,11 @@ Route::group(array('before'=>'auth|admin'), function(){
 
     // =================== COURSES ===================
     // List all the course
-    Route::get('courses', function(){
+    Route::get('courses', array('as'=>'listcourses', 'do'=>function(){
         $courses = Course::with('coordinator_id')->all();
-        return View::make('main.index')
+        return View::make('main.courses')
             ->with('courses',$courses);
-    });
+    }));
 
     // Show the new course form
     Route::get('course/new', array('as'=>'newcourse', 'do'=>function(){
@@ -150,8 +150,12 @@ Route::group(array('before'=>'auth|admin'), function(){
     Route::get('(:any)/subjects', array('as'=>'listsubjects', 'do'=>function($course){
         $query = Course::where('code','=',$course)->first();
         $subjects = Subject::where('course_id','=',$query->id)->get();
-        return View::make('main.subjects')
-            ->with('subjects', $subjects);
+
+        $data = array(
+                'subjects' => $subjects,
+                'code' => $course
+            );
+        return View::make('main.subjects', $data);
     }));
 
     // Show the new course form
@@ -164,13 +168,25 @@ Route::group(array('before'=>'auth|admin'), function(){
     // Create a new subject for the course in the URI
     Route::post('(:any)/subject/new', array('before'=>'auth', 'do'=>function($course){
         $new_subject = array(
+            'code' => Input::get('code'),
             'name' => Input::get('name'),
             'description' => Input::get('description'),
             'course_id' => Input::get('course_id')
         );
+        $rules = array(
+                'code' => 'required',
+                'name' => 'required',
+                'description' => 'required'
+        );
+        $v = Validator::make($new_subject, $rules);
+        if($v->fails()){
+            return Redirect::to(URL::current())
+                ->with_errors($v)
+                ->with_input();
+        }
         $subject = new Subject($new_subject);
         $subject->save();
-        return Redirect::to('courses');
+        return Redirect::to(URL::to_route('listsubjects', array($course)));
     }));
 
     // =================== TOPICS ===================
@@ -200,14 +216,24 @@ Route::group(array('before'=>'auth|admin'), function(){
 
     // Create a new topic for the topic in the URI
     Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','do'=>function($course, $subject){
-        $data = array(
+        $new_topic = array(
             'name' => Input::get('name'),
             'content' => Input::get('content'),
             'subject_id' => Input::get('subject')
         );
-        $topic = new Topic($data);
+        $rules = array(
+                'name' => 'required',
+                'content' => 'required',
+        );
+        $v = Validator::make($new_topic, $rules);
+        if($v->fails()){
+            return Redirect::to(URL::current())
+                ->with_errors($v)
+                ->with_input();
+        }
+        $topic = new Topic($new_topic);
         $topic->save();
-        return Redirect::to('courses');
+        return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
     }));
 });
 
@@ -250,13 +276,3 @@ Route::group(array('before'=>'auth'), function(){
     }));
 });
 
-Route::get('navigation', array('before'=>'auth','as'=>'navmenu','do'=>function(){
-    $enrollCourse = User::find(Auth::user()->id)->enrollment()->first();
-    $courseCode = $enrollCourse->course()->first();
-    $subjects = $courseCode->subjects()->get();
-    $data = array(
-        'code' => $courseCode->code,
-        'subjects' => $subjects
-    );
-    return View::make('template.navigation', $data);
-}));

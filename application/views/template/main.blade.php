@@ -17,7 +17,10 @@
         <h2>Code is Limmericks</h2>
     </div>
     <nav>
+    @if ( Auth::guest() )
+    @else
         @render('template.navigation')
+    @endif
     </nav>
     <div class="content">
         @yield('content')
