@@ -158,12 +158,13 @@ Route::group(array('before'=>'auth|admin'), function(){
         return View::make('forms.course', $data);
     }));
 
-    Route::put('course/edit', array('as'=>'editcourse', 'do'=>function(){
-        $edit_course = array(
-            'name' => Input::get('name'),
-            'code' => Input::get('code'),
-            'coordinator_id' => Input::get('coordinator_id'));
-    }));
+    Route::put('course/(:any)/edit', function($code){
+        $new_course = Course::where('code','=',$code)->first();
+        $new_course->name = Input::get('name');
+        $new_course->code = Input::get('code');
+        $new_course->save();
+        return View::make(URL::to_route('listcourses'));
+    });
 
     // =================== SUBJECT ===================
 
@@ -179,10 +180,11 @@ Route::group(array('before'=>'auth|admin'), function(){
         return View::make('main.subjects', $data);
     }));
 
-    // Show the new course form
+    // Show the new subject form
     Route::get('(:any)/subject/new', array('as'=>'newsubject', 'do'=>function($course){
         $query = Course::where('code','=',$course)->first();
         return View::make('forms.subject')
+            ->with('isNew', true)
             ->with('course', $query);
     }));
 
@@ -210,6 +212,24 @@ Route::group(array('before'=>'auth|admin'), function(){
         return Redirect::to(URL::to_route('listsubjects', array($course)));
     }));
 
+    Route::get('(:any)/subject/(:any)/edit', array('as'=>'editsubject', 'do'=>function($course, $subject){
+        $query = Course::where('code','=',$course)->first();
+        $editSubject = Subject::where('code','=',$subject)->first();
+        return View::make('forms.subject')
+            ->with('course', $query)
+            ->with('isNew', false)
+            ->with('info', $editSubject);
+    }));
+
+    Route::put('(:any)/subject/(:any)/edit', function($course, $subject){
+        $new_subject = Subject::where('code','=',$subject)->first();
+        $new_subject->name = Input::get('name');
+        $new_subject->description = Input::get('description');
+        $new_subject->code = Input::get('code');
+        $new_subject->save();
+        return View::make('listsubjects', array($course));
+    });
+
     // =================== TOPICS ===================
 
     // List all topics
@@ -219,6 +239,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         $topics = Topic::where('subject_id','=',$linkSubject->id)->get();
 
         $data = array(
+            'isNew' => true,
             'course' => $linkCourse,
             'subject' => $linkSubject,
             'topics' => $topics
@@ -249,7 +270,6 @@ Route::group(array('before'=>'auth|admin'), function(){
         );
         $v = Validator::make($new_topic, $rules);
         if($v->fails()){
-
             return Redirect::to(URL::current())
                 ->with_errors($v)
                 ->with_input();
@@ -258,6 +278,23 @@ Route::group(array('before'=>'auth|admin'), function(){
         $topic->save();
         return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
     }));
+
+    Route::get('(:any)/(:any)/topic/(:num)/edit', array('as'=>'edittopic','do'=>function($course, $subject, $topic){
+        $query = Topic::find($topic);
+        $subjectObj = $query->subject()->first();
+        return View::make('forms.topic')
+            ->with('isNew', false)
+            ->with('subject', $subjectObj)
+            ->with('info', $query);
+    }));
+
+    Route::put('(:any)/(:any)/topic/(:num)/edit', function($course, $subject, $topic){
+        $updated_topic = Topic::find($topic);
+        $updated_topic->name = Input::get('name');
+        $updated_topic->content = Input::get('content');
+        $updated_topic->save();
+        return View::make(URL::to_route('listtopics', array($course, $subject)));
+    });
 });
 
 Route::group(array('before'=>'auth'), function(){
@@ -267,21 +304,23 @@ Route::group(array('before'=>'auth'), function(){
     Route::get('(:any)/(:any)/(:any)/posts', array('as'=>'listposts', 'do'=>function ($course, $subject, $topic){
         $linkTopic = Topic::find($topic);
         $posts = Post::where('topic_id','=',$linkTopic->id)->get();
-
-        return View::make('main.posts')
-            ->with('posts', $posts);
+        $data = array(
+            'course' => $course,
+            'subject' => $subject,
+            'topic' => $topic,
+            'posts' => $posts);
+        return View::make('main.posts', $data);
     }));
 
     // Show the new post form for the topic in the URI
     Route::get('(:any)/(:any)/(:any)/posts/new', function($course, $subject, $topic_id){
         $user = Auth::user();
         $topic = Topic::find($topic_id);
-
         $data = array(
+            'isNew' => true,
             'user' => $user,
             'topic' => $topic
         );
-
         return View::make('forms.post',$data);
     });
 
@@ -306,5 +345,25 @@ Route::group(array('before'=>'auth'), function(){
         $post->save();
         return Redirect::to(URL::to_route('listposts', array($course, $subject, $topic)));
     }));
+
+    Route::get('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'editpost', 'do'=>function($course, $subject, $topic_id, $post_id){
+        $edit_Post = Post::find($post_id);
+        $this_topic = $edit_Post->topic()->first();
+        $user = Auth::user();
+        $data = array(
+            'isNew' => false,
+            'user' => $user,
+            'topic' => $this_topic,
+            'post' => $edit_Post);
+        return View::make('forms.post', $data);
+    }));
+
+    Route::put('(:any)/(:any)/(:num)/post/(:num)/edit', function($course, $subject, $topic_id, $post_id){
+        $updated_post = Post::find($post_id);
+        $updated_post->title = Input::get('title');
+        $updated_post->body = Input::get('body');
+        $updated_post->save();
+        return View::make(URL::to_route('listposts',array($course, $subject, $topic_id)));
+    });
 });
 
