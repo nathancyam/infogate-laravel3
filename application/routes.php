@@ -175,7 +175,7 @@ Route::group(array('before'=>'auth|admin'), function(){
 
         $data = array(
                 'subjects' => $subjects,
-                'code' => $course
+                'code' => $query
             );
         return View::make('main.subjects', $data);
     }));
@@ -242,8 +242,7 @@ Route::group(array('before'=>'auth|admin'), function(){
             'isNew' => true,
             'course' => $linkCourse,
             'subject' => $linkSubject,
-            'topics' => $topics
-        );
+            'topics' => $topics);
         return View::make('main.topics', $data);
     }));
 
@@ -251,9 +250,9 @@ Route::group(array('before'=>'auth|admin'), function(){
     Route::get('(:any)/(:any)/topic/new', function($course, $subject){
         $details = Subject::where('code','=',$subject)->first();
         $data = array(
+            'isNew' => true,
             'course' => $course,
-            'subject' => $details
-        );
+            'subject' => $details);
         return View::make('forms.topic',$data);
     });
 
@@ -262,12 +261,10 @@ Route::group(array('before'=>'auth|admin'), function(){
         $new_topic = array(
             'name' => Input::get('name'),
             'content' => Input::get('content'),
-            'subject_id' => Input::get('subject_id')
-        );
+            'subject_id' => Input::get('subject_id'));
         $rules = array(
                 'name' => 'required',
-                'content' => 'required',
-        );
+                'content' => 'required');
         $v = Validator::make($new_topic, $rules);
         if($v->fails()){
             return Redirect::to(URL::current())
@@ -293,7 +290,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         $updated_topic->name = Input::get('name');
         $updated_topic->content = Input::get('content');
         $updated_topic->save();
-        return View::make(URL::to_route('listtopics', array($course, $subject)));
+        return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
     });
 });
 
@@ -319,8 +316,7 @@ Route::group(array('before'=>'auth'), function(){
         $data = array(
             'isNew' => true,
             'user' => $user,
-            'topic' => $topic
-        );
+            'topic' => $topic);
         return View::make('forms.post',$data);
     });
 
@@ -333,8 +329,7 @@ Route::group(array('before'=>'auth'), function(){
             'author_id' => Input::get('author_id')
         );
         $rules = array(
-            'body' => 'required'
-        );
+            'body' => 'required');
         $v = Validator::make($new_post, $rules);
         if($v->fails()){
             return Redirect::to(URL::current())
@@ -363,7 +358,7 @@ Route::group(array('before'=>'auth'), function(){
         $updated_post->title = Input::get('title');
         $updated_post->body = Input::get('body');
         $updated_post->save();
-        return View::make(URL::to_route('listposts',array($course, $subject, $topic_id)));
+        return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     });
 });
 

@@ -5,6 +5,6 @@
     @foreach($posts as $post)
         <p>{{ $post->title }}</p>
         <p>{{ $post->body }}</p>
-        <p>{{ HTML::link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)))}}</p>
+        <p>{{ HTML::link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}</p>
     @endforeach
 @endsection
