@@ -194,7 +194,7 @@ Route::group(array('before'=>'auth|admin'), function(){
     // List all topics
     Route::get('(:any)/(:any)/topics', array('as'=>'listtopics', 'do'=>function ($course, $subject){
         $linkCourse = Course::where('code','=',$course)->first();
-        $linkSubject = Subject::where('course_id','=',$linkCourse->id)->first();
+        $linkSubject = Subject::where('code','=',$subject)->first();
         $topics = Topic::where('subject_id','=',$linkSubject->id)->get();
 
         $data = array(

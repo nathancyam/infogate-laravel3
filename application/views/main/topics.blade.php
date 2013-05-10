@@ -7,7 +7,7 @@
     {{ $subject->name }}
     <p>
     @foreach($topics as $topic)
-    	{{ HTML::link(URL::to_route('listposts', array($course->code, $subject->code, $topic->id)), 'See posts for ' . $topic->name) }}
+    	<p>{{ HTML::link(URL::to_route('listposts', array($course->code, $subject->code, $topic->id)), 'See posts for ' . $topic->name) }}</p>
     @endforeach
     </p>
 @endsection

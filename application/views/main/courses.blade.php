@@ -4,7 +4,7 @@
     @foreach($courses as $acourse)
         <div>
             <p>{{ $acourse->name }}</p>
-            {{ HTML::link(URL::to_route('listsubjects', array($acourse->code)), 'See subjects for ' . $acourse->name) }}
+            <p>{{ HTML::link(URL::to_route('listsubjects', array($acourse->code)), 'See subjects for ' . $acourse->name) }}</p>
         </div>
     @endforeach
 @endsection
