@@ -9,11 +9,6 @@
 <body>
     <div class="container-fluid">
         <div class="header">
-            @if ( Auth::guest() )
-                {{ HTML::link('login', 'Login') }}
-            @else
-                {{ HTML::link('logout', 'Logout') }}
-            @endif
             <hr />
             <h1>Infogate</h1>
             <h2>Eduction Portal</h2>
@@ -25,6 +20,16 @@
                         {{ HTML::link(URL::base(), 'Home') }}
                     </li>
                 </ul>
+                <p class="navbar-text pull-right">
+                    @if ( Auth::guest() )
+                        {{ HTML::link('login', 'Login') }}
+                    @else
+                        Logged in as
+                        {{ Auth::user()->username }}
+                        &nbsp
+                        {{ HTML::link('logout', 'Logout?') }}
+                    @endif
+                </p>
             </div>
         </div>
         <nav>
