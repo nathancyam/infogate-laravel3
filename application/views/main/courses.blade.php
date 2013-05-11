@@ -1,5 +1,6 @@
 @layout('template.main')
 @section('content')
+    <h1>Courses</h1>
     {{ HTML::link_to_route('newcourse','Add a new course') }}
     @foreach($courses as $acourse)
         <div>
