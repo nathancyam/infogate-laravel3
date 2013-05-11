@@ -13,7 +13,7 @@ if (Auth::user()->role == 'admin'){
 array_push($navArray, array(Navigation::HEADER, 'Courses'));
 array_push($navArray, array(strtoupper($code), URL::to_route('listsubjects', array($code))));
 
-array_push($navArray, array(Navigation::HEADER, 'Subjects for '));
+array_push($navArray, array(Navigation::HEADER, 'Subjects for ' . strtoupper($code)));
 foreach($subjects as $subject){
     array_push($navArray, array(strtoupper($subject->code), URL::to_route('listtopics', array($code, $subject->code))));
 }

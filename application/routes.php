@@ -66,11 +66,16 @@ Route::post('login', function(){
         'username'=>Input::get('username'),
         'password'=>Input::get('password')
     );
+    $rules = array(
+        'username' => 'required',
+        'password' => 'required'
+    );
+    $validation = Validator::make($userdata, $rules);
+    if($validation->fails()){
+        return Redirect::to('login')->with_errors($validation);
+    }
     if(Auth::attempt($userdata)){
         return Redirect::to('/');
-    } else {
-        return Redirect::to('login')
-            ->with('login_errors', true);
     }
 });
 
@@ -138,7 +143,7 @@ Route::group(array('before'=>'auth|admin'), function(){
     Route::post('course/new', array('as'=>'postcourse', 'do'=>function(){
         $new_course = array(
             'name' => Input::get('name'),
-            'code' => Input::get('code'),
+            'code' => strtoupper(Input::get('code')),
             'coordinator_id' => Input::get('coordinator_id')
         );
         $course = new Course($new_course);
@@ -163,7 +168,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         $new_course->name = Input::get('name');
         $new_course->code = Input::get('code');
         $new_course->save();
-        return View::make(URL::to_route('listcourses'));
+        return Redirect::to(URL::to_route('listcourses'));
     });
 
     // =================== SUBJECT ===================

@@ -1,15 +1,13 @@
 {{ Form::open('login') }}
     <!-- check for login errors flash var -->
-    @if (Session::has('login_errors'))
-        <span class="error">Username or password incorrect.</span>
-    @endif
+    <div class="control-group {{ $errors->has('username') ? 'error' : '' }}"></div>
+    <div class="control-group {{ $errors->has('password') ? 'error' : '' }}"></div>
 
-    <!-- username field -->
+    <!-- Username field -->
     <p>{{ Form::label('username', 'Username') }}</p>
     <p>{{ Form::text('username') }}</p>
-    <p>{{ Form::inline_help('*') }}</p>
 
-    <!-- password field -->
+    <!-- Password field -->
     <p>{{ Form::label('password', 'Password') }}</p>
     <p>{{ Form::password('password') }}</p>
 
@@ -17,7 +15,3 @@
     <p>{{ Form::submit('Login') }}</p>
 
 {{ Form::close() }}
-
-<?php echo Form::control_group(Form::label('inputError', 'Input with error'),
-   Form::text('inputError'), 'error',
-   Form::inline_help('Please correct the error')); ?>
