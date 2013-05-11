@@ -227,7 +227,7 @@ Route::group(array('before'=>'auth|admin'), function(){
         $new_subject->description = Input::get('description');
         $new_subject->code = Input::get('code');
         $new_subject->save();
-        return View::make('listsubjects', array($course));
+        return Redirect::to(URL::to_route('listsubjects', array($course)));
     });
 
     // =================== TOPICS ===================

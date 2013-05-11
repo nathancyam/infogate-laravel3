@@ -2,7 +2,7 @@
 
 @section('content')
     <h2>Topics for
-    {{ $course->name }}
+    {{ $course->name }}:
     {{ $subject->name }}
     </h2>
     {{ HTML::link(URL::to_route('newtopic', array($course->code, $subject->code)), 'Create a new topic for ' . $subject->name) }}

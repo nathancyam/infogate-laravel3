@@ -19,16 +19,22 @@
                         {{ HTML::link(URL::base(), 'Home') }}
                     </li>
                 </ul>
-                <p class="navbar-text pull-right">
-                    @if ( Auth::guest() )
-                        {{ HTML::link('login', 'Login') }}
-                    @else
-                        Logged in as
-                        {{ Auth::user()->username }}
-                        &nbsp
-                        {{ HTML::link('logout', 'Logout?') }}
-                    @endif
-                </p>
+                <ul class="nav pull-right">
+                    <li class="navbar-text pull-right">
+                        @if ( Auth::guest() )
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In<strong class="caret"></strong></a>
+                                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                                    @render('main.login')
+                                </div>
+                            </li>
+                        @else
+                            <li>
+                                {{ HTML::link('logout', 'Logout?') }}
+                            </li>
+                        @endif
+                    </li>
+                </ul>
             </div>
         </div>
         <nav>
