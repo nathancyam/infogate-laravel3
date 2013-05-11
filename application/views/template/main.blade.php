@@ -8,8 +8,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="header">
-            <hr />
+        <div class="hero-unit">
             <h1>Infogate</h1>
             <h2>Eduction Portal</h2>
         </div>
