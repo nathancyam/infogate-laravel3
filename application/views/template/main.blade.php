@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Wordpush</title>
-    {{ HTML::style('css/style.css') }}
     {{ Asset::container('bootstrapper')->styles() }}
     {{ Asset::container('bootstrapper')->scripts() }}
 </head>
 <body>
-    <div class="header">
-    @if ( Auth::guest() )
-        {{ HTML::link('login', 'Login') }}
-    @else
-        {{ HTML::link('logout', 'Logout') }}
-    @endif
-    <hr />
-        <h1>Wordpush</h1>
-        <h2>Code is Limmericks</h2>
-    </div>
-    <nav>
-    @if ( Auth::guest() )
-    @else
-        @render('template.navigation')
-    @endif
-    </nav>
-    <div class="content">
-        @yield('content')
+    <div class="container-fluid">
+        <div class="header">
+            @if ( Auth::guest() )
+                {{ HTML::link('login', 'Login') }}
+            @else
+                {{ HTML::link('logout', 'Logout') }}
+            @endif
+            <hr />
+            <h1>Infogate</h1>
+            <h2>Eduction Portal</h2>
+        </div>
+        <div class='navbar navbar-inverse'>
+            <div class='navbar-inner nav-collapse' style="height: auto;">
+                <ul class="nav">
+                    <li class="active">
+                        {{ HTML::link(URL::base(), 'Home') }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <nav>
+        <div id='content' class='row-fluid'>
+            <nav class='span2 sidebar'>
+                @if ( Auth::guest() )
+                @else
+                    @render('template.navigation')
+                @endif
+            </nav>
+            <div class="span10 main">
+                @yield('content')
+            </div>
+        </div>
     </div>
 </body>
 </html>
