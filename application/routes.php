@@ -53,7 +53,7 @@ Route::filter('auth', function()
 Route::filter('admin', function(){
     $user = Auth::user();
     if($user->role !== 'admin'){
-        return Redirect::to('login');
+        return Redirect::to('/');
     }
 });
 
@@ -91,7 +91,7 @@ Route::get('logout', function(){
     return Redirect::to('/');
 });
 
-Route::group(array('before'=>'auth|admin'), function(){
+Route::group(array('before'=>'auth'), function(){
 
     // =================== COURSES ===================
     // List all the course
@@ -101,45 +101,47 @@ Route::group(array('before'=>'auth|admin'), function(){
             ->with('courses',$courses);
     }));
 
-    // Show the new course form
-    Route::get('course/new', array('as'=>'newcourse', 'do'=>function(){
-        $isNew = true;
-        $user = Auth::user();
-        return view::make('forms.course')
-            ->with('isNew', $isNew)
-            ->with('user', $user);
-    }));
+    Route::group(array('before'=>'admin'), function(){
+        // Show the new course form
+        Route::get('course/new', array('as'=>'newcourse', 'do'=>function(){
+            $isNew = true;
+            $user = Auth::user();
+            return view::make('forms.course')
+                ->with('isNew', $isNew)
+                ->with('user', $user);
+        }));
 
-    // Create a new course
-    Route::post('course/new', array('as'=>'postcourse', 'do'=>function(){
-        $new_course = array(
-            'name' => Input::get('name'),
-            'code' => strtoupper(Input::get('code')),
-            'coordinator_id' => Input::get('coordinator_id')
-        );
-        $course = new Course($new_course);
-        $course->save();
-        return Redirect::to('courses');
-    }));
+        // Create a new course
+        Route::post('course/new', array('as'=>'postcourse', 'do'=>function(){
+            $new_course = array(
+                'name' => Input::get('name'),
+                'code' => strtoupper(Input::get('code')),
+                'coordinator_id' => Input::get('coordinator_id')
+            );
+            $course = new Course($new_course);
+            $course->save();
+            return Redirect::to('courses');
+        }));
 
-    Route::get('course/(:any)/edit', array('as'=>'editcourse', 'do'=>function($code){
-        $isNew = false;
-        $user = Auth::user();
-        $get_course = Course::where('code','=',$code)->first();
-        $data = array(
-            'user' => $user,
-            'isNew' => $isNew,
-            'name' => $get_course->name,
-            'code' => $get_course->code);
-        return View::make('forms.course', $data);
-    }));
+        Route::get('course/(:any)/edit', array('as'=>'editcourse', 'do'=>function($code){
+            $isNew = false;
+            $user = Auth::user();
+            $get_course = Course::where('code','=',$code)->first();
+            $data = array(
+                'user' => $user,
+                'isNew' => $isNew,
+                'name' => $get_course->name,
+                'code' => $get_course->code);
+            return View::make('forms.course', $data);
+        }));
 
-    Route::put('course/(:any)/edit', function($code){
-        $new_course = Course::where('code','=',$code)->first();
-        $new_course->name = Input::get('name');
-        $new_course->code = Input::get('code');
-        $new_course->save();
-        return Redirect::to(URL::to_route('listcourses'));
+        Route::put('course/(:any)/edit', function($code){
+            $new_course = Course::where('code','=',$code)->first();
+            $new_course->name = Input::get('name');
+            $new_course->code = Input::get('code');
+            $new_course->save();
+            return Redirect::to(URL::to_route('listcourses'));
+        });
     });
 
     // =================== SUBJECT ===================
@@ -156,54 +158,56 @@ Route::group(array('before'=>'auth|admin'), function(){
         return View::make('main.subjects', $data);
     }));
 
-    // Show the new subject form
-    Route::get('(:any)/subject/new', array('as'=>'newsubject', 'do'=>function($course){
-        $query = Course::where('code','=',$course)->first();
-        return View::make('forms.subject')
-            ->with('isNew', true)
-            ->with('course', $query);
-    }));
+    Route::group(array('before'=>'admin'), function(){
+        // Show the new subject form
+        Route::get('(:any)/subject/new', array('as'=>'newsubject', 'do'=>function($course){
+            $query = Course::where('code','=',$course)->first();
+            return View::make('forms.subject')
+                ->with('isNew', true)
+                ->with('course', $query);
+        }));
 
-    // Create a new subject for the course in the URI
-    Route::post('(:any)/subject/new', array('before'=>'auth', 'do'=>function($course){
-        $new_subject = array(
-            'code' => Input::get('code'),
-            'name' => Input::get('name'),
-            'description' => Input::get('description'),
-            'course_id' => Input::get('course_id')
-        );
-        $rules = array(
-                'code' => 'required',
-                'name' => 'required',
-                'description' => 'required'
-        );
-        $v = Validator::make($new_subject, $rules);
-        if($v->fails()){
-            return Redirect::to(URL::current())
-                ->with_errors($v)
-                ->with_input();
-        }
-        $subject = new Subject($new_subject);
-        $subject->save();
-        return Redirect::to(URL::to_route('listsubjects', array($course)));
-    }));
+        // Create a new subject for the course in the URI
+        Route::post('(:any)/subject/new', array('before'=>'auth', 'do'=>function($course){
+            $new_subject = array(
+                'code' => Input::get('code'),
+                'name' => Input::get('name'),
+                'description' => Input::get('description'),
+                'course_id' => Input::get('course_id')
+            );
+            $rules = array(
+                    'code' => 'required',
+                    'name' => 'required',
+                    'description' => 'required'
+            );
+            $v = Validator::make($new_subject, $rules);
+            if($v->fails()){
+                return Redirect::to(URL::current())
+                    ->with_errors($v)
+                    ->with_input();
+            }
+            $subject = new Subject($new_subject);
+            $subject->save();
+            return Redirect::to(URL::to_route('listsubjects', array($course)));
+        }));
 
-    Route::get('(:any)/subject/(:any)/edit', array('as'=>'editsubject', 'do'=>function($course, $subject){
-        $query = Course::where('code','=',$course)->first();
-        $editSubject = Subject::where('code','=',$subject)->first();
-        return View::make('forms.subject')
-            ->with('course', $query)
-            ->with('isNew', false)
-            ->with('info', $editSubject);
-    }));
+        Route::get('(:any)/subject/(:any)/edit', array('as'=>'editsubject', 'do'=>function($course, $subject){
+            $query = Course::where('code','=',$course)->first();
+            $editSubject = Subject::where('code','=',$subject)->first();
+            return View::make('forms.subject')
+                ->with('course', $query)
+                ->with('isNew', false)
+                ->with('info', $editSubject);
+        }));
 
-    Route::put('(:any)/subject/(:any)/edit', function($course, $subject){
-        $new_subject = Subject::where('code','=',$subject)->first();
-        $new_subject->name = Input::get('name');
-        $new_subject->description = Input::get('description');
-        $new_subject->code = Input::get('code');
-        $new_subject->save();
-        return Redirect::to(URL::to_route('listsubjects', array($course)));
+        Route::put('(:any)/subject/(:any)/edit', function($course, $subject){
+            $new_subject = Subject::where('code','=',$subject)->first();
+            $new_subject->name = Input::get('name');
+            $new_subject->description = Input::get('description');
+            $new_subject->code = Input::get('code');
+            $new_subject->save();
+            return Redirect::to(URL::to_route('listsubjects', array($course)));
+        });
     });
 
     // =================== TOPICS ===================
@@ -222,55 +226,54 @@ Route::group(array('before'=>'auth|admin'), function(){
         return View::make('main.topics', $data);
     }));
 
-    // Show the new topic form for the course in the URI
-    Route::get('(:any)/(:any)/topic/new', function($course, $subject){
-        $details = Subject::where('code','=',$subject)->first();
-        $data = array(
-            'isNew' => true,
-            'course' => $course,
-            'subject' => $details);
-        return View::make('forms.topic',$data);
+    Route::group(array('before'=>'admin'), function(){
+        // Show the new topic form for the course in the URI
+        Route::get('(:any)/(:any)/topic/new', function($course, $subject){
+            $details = Subject::where('code','=',$subject)->first();
+            $data = array(
+                'isNew' => true,
+                'course' => $course,
+                'subject' => $details);
+            return View::make('forms.topic',$data);
+        });
+
+        // Create a new topic for the topic in the URI
+        Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','do'=>function($course, $subject){
+            $new_topic = array(
+                'name' => Input::get('name'),
+                'content' => Input::get('content'),
+                'subject_id' => Input::get('subject_id'));
+            $rules = array(
+                    'name' => 'required',
+                    'content' => 'required');
+            $v = Validator::make($new_topic, $rules);
+            if($v->fails()){
+                return Redirect::to(URL::current())
+                    ->with_errors($v)
+                    ->with_input();
+            }
+            $topic = new Topic($new_topic);
+            $topic->save();
+            return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
+        }));
+
+        Route::get('(:any)/(:any)/topic/(:num)/edit', array('as'=>'edittopic','do'=>function($course, $subject, $topic){
+            $query = Topic::find($topic);
+            $subjectObj = $query->subject()->first();
+            return View::make('forms.topic')
+                ->with('isNew', false)
+                ->with('subject', $subjectObj)
+                ->with('info', $query);
+        }));
+
+        Route::put('(:any)/(:any)/topic/(:num)/edit', function($course, $subject, $topic){
+            $updated_topic = Topic::find($topic);
+            $updated_topic->name = Input::get('name');
+            $updated_topic->content = Input::get('content');
+            $updated_topic->save();
+            return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
+        });
     });
-
-    // Create a new topic for the topic in the URI
-    Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','do'=>function($course, $subject){
-        $new_topic = array(
-            'name' => Input::get('name'),
-            'content' => Input::get('content'),
-            'subject_id' => Input::get('subject_id'));
-        $rules = array(
-                'name' => 'required',
-                'content' => 'required');
-        $v = Validator::make($new_topic, $rules);
-        if($v->fails()){
-            return Redirect::to(URL::current())
-                ->with_errors($v)
-                ->with_input();
-        }
-        $topic = new Topic($new_topic);
-        $topic->save();
-        return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
-    }));
-
-    Route::get('(:any)/(:any)/topic/(:num)/edit', array('as'=>'edittopic','do'=>function($course, $subject, $topic){
-        $query = Topic::find($topic);
-        $subjectObj = $query->subject()->first();
-        return View::make('forms.topic')
-            ->with('isNew', false)
-            ->with('subject', $subjectObj)
-            ->with('info', $query);
-    }));
-
-    Route::put('(:any)/(:any)/topic/(:num)/edit', function($course, $subject, $topic){
-        $updated_topic = Topic::find($topic);
-        $updated_topic->name = Input::get('name');
-        $updated_topic->content = Input::get('content');
-        $updated_topic->save();
-        return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
-    });
-});
-
-Route::group(array('before'=>'auth'), function(){
 
     // =================== POSTS ===================
     // List all posts
