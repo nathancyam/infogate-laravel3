@@ -2,7 +2,7 @@
 $navArray = array(
         array(Navigation::HEADER, 'Navigation'),
         array('Home', URL::base()),
-        array('Library', '#'),
+        array('User Panel', URL::to_action('account')),
         array('Applications', '#'));
 
 if (Auth::user()->role == 'admin'){
