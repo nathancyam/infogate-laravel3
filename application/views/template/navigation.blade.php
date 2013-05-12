@@ -1,4 +1,5 @@
 <?php
+
 $navArray = array(
         array(Navigation::HEADER, 'Navigation'),
         array('Home', URL::base()),

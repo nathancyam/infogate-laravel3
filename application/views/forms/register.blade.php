@@ -2,7 +2,7 @@
 
 @section('content')
     @if($isNew == true)
-        {{ Form::open('user/new') }}
+        {{ Form::open(URL::to_action('register@createuser')) }}
 
         {{ $errors->first('fName', '<p class="error">:message</p>') }}
         <p>{{ Form::label('fName', 'First Name:') }}</p>
@@ -24,6 +24,10 @@
         {{ $errors->first('email', '<p class="error">:message</p>') }}
         <p>{{ Form::label('email', 'E-mail') }}</p>
         <p>{{ Form::email('email') }}</p>
+
+        {{ $errors->first('enrollment', '<p class="error">:message</p>') }}
+        <p>{{ Form::label('enrollment', 'Course Enrollment') }}</p>
+        {{ Form::select('enrollment', array($courses)) }}
 
         <p>{{ Form::submit('Sign Up') }}</p>
 

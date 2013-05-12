@@ -1,8 +1,7 @@
-{{ Form::open('login') }}
-    <!-- check for login errors flash var -->
-    <div class="control-group {{ $errors->has('username') ? 'error' : '' }}"></div>
-    <div class="control-group {{ $errors->has('password') ? 'error' : '' }}"></div>
-
+{{ Form::open(URL::to_route('postLogin')) }}
+    @if (Session::has('login_errors'))
+        <span class="error">Username or password incorrect.</span>
+    @endif
     <!-- Username field -->
     <p>{{ Form::label('username', 'Username') }}</p>
     <p>{{ Form::text('username') }}</p>
@@ -12,6 +11,5 @@
     <p>{{ Form::password('password') }}</p>
 
     <!-- submit button -->
-    <p>{{ Form::submit('Login') }}</p>
-
+    <p>{{ Form::submit('Login') }} {{ Button::link(URL::to_action('register'), 'Register') }}</p>
 {{ Form::close() }}

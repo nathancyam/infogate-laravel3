@@ -27,13 +27,17 @@ Route::filter('after', function($response)
 
 View::composer('template.navigation', function($view){
     $enrollCourse = User::find(Auth::user()->id)->enrollment()->first();
-    $courseCode = $enrollCourse->course()->first();
-    $subjects = $courseCode->subjects()->get();
-    $data = array(
-        'code' => $courseCode->code,
-        'subjects' => $subjects
-    );
-    $view->with($data);
+    if($enrollCourse){
+        $courseCode = $enrollCourse->course()->first();
+        $subjects = $courseCode->subjects()->get();
+        $data = array(
+            'code' => $courseCode->code,
+            'subjects' => $subjects
+        );
+        $view->with($data);
+    } else {
+        $view;
+    }
 });
 
 Route::filter('csrf', function()
@@ -54,6 +58,7 @@ Route::filter('admin', function(){
 });
 
 Route::controller('account');
+Route::controller('register');
 
 Route::get('superwelcome/(:any)/(:any)', 'account@welcome');
 
@@ -61,7 +66,7 @@ Route::get('login', function(){
     return View::make('main.login');
 });
 
-Route::post('login', function(){
+Route::post('login', array('as'=>'postLogin', 'do'=>function(){
     $userdata = array(
         'username'=>Input::get('username'),
         'password'=>Input::get('password')
@@ -76,48 +81,14 @@ Route::post('login', function(){
     }
     if(Auth::attempt($userdata)){
         return Redirect::to('/');
+    } else {
+        return Redirect::to('/');
     }
-});
+}));
 
 Route::get('logout', function(){
     Auth::logout();
     return Redirect::to('/');
-});
-
-Route::get('user/new', array('as'=>'newuser', 'do'=>function(){
-    return View::make('forms.register');
-}));
-
-Route::post('user/new', function(){
-    $passwordcheck = Input::get('passwordcheck');
-    $password = Input::get('password');
-    if($passwordcheck !== $password){
-        return Redirect::to('user/new');
-    }
-    $surname = Input::get('sName');
-    $forename = Input::get('fName');
-    $username = strtolower(substr($forename,0,2).substr($surname,0,4));
-    $new_user = array(
-        'username' => $username,
-        'fName' => Input::get('fName'),
-        'sName' => Input::get('sName'),
-        'password' => Hash::make(Input::get('password')),
-        'email' => Input::get('email')
-    );
-    $rules = array(
-        'fName' => 'required',
-        'sName' => 'required',
-        'password' => 'required'
-    );
-    $v = Validator::make($new_user, $rules);
-    if($v->fails()){
-        return Redirect::to('user/new')
-            ->with_errors($v)
-            ->with_input();
-    }
-    $user = new User($new_user);
-    $user->save();
-    return Redirect::to('courses');
 });
 
 Route::group(array('before'=>'auth|admin'), function(){
