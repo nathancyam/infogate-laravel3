@@ -173,7 +173,7 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 }
 
 $elastic_hostname = isset($_SERVER['RDS_HOSTNAME']) ? $_SERVER['SERVER_NAME'] : 'none-existant-hostname';
-$env = $app->detectEnvironment(array(
+$env = $application->detectEnvironment(array(
     'local'   => array('localhost'),
     'elastic' => array($elastic_hostname)
 ));
