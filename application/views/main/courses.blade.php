@@ -10,7 +10,7 @@
         <div style="float: left;">
             <h1>Courses</h1>
         </div>
-        @if (Auth::user()->role == 'admin')
+        @if ((Auth::user()->role == 'admin')||($checkCoord))
             <div style='float: right;'>
                 {{ HTML::link_to_route('newcourse','Add a new course') }}
             </div>
