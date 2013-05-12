@@ -7,7 +7,7 @@ class Register_Controller extends Base_Controller
         $listCourse = Course::all();
         $selectArray = array();
         foreach($listCourse as $course){
-            array_push($selectArray, $course->id = $course->code);
+            $selectArray[$course->id] = $course->code;
         }
         return View::make('forms.register')
             ->with('courses', $selectArray)
@@ -53,6 +53,11 @@ class Register_Controller extends Base_Controller
         $enrol = new Enrollment($new_enrollment);
         $enrol->save();
 
-        return Redirect::to('/');
+        $userdata = array(
+            'username' => $username,
+            'password' => $password);
+        if(Auth::attempt($userdata)){
+            return Redirect::to('/');
+        }
     }
 }
