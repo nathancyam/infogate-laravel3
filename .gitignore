@@ -1,3 +1,4 @@
 .elasticbeanstalk/
 .DS_Store
 .ebextensions
+application/config/database.php
