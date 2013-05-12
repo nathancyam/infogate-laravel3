@@ -63,10 +63,20 @@ Route::filter('admin', function(){
     }
 });
 
+Event::listen('isCoord', function($user){
+    if($user->role == 'admin'){
+        return true;
+    } elseif ($user->role == 'coordinator'){
+        $iamthecoordinator = $user->enrollment()->first()->course()->first()->coordinator_id;
+        if($user->id == $iamthecoordinator){
+            return true;
+        }
+    }
+    return false;
+});
+
 Route::controller('account');
 Route::controller('register');
-
-Route::get('superwelcome/(:any)/(:any)', 'account@welcome');
 
 Route::get('login', function(){
     return View::make('main.login');
