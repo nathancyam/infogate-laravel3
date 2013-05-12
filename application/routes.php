@@ -51,9 +51,15 @@ Route::filter('auth', function()
 });
 
 Route::filter('admin', function(){
-    $user = Auth::user();
-    if($user->role !== 'admin'){
+    $user = User::find(Auth::user()->id);
+    if(($user->role !== 'admin') || ($user->role !== 'coordinator')){
         return Redirect::to('/');
+    }
+    elseif($user->role == 'coordinator'){
+        $isCoord = $user->enrollment()->course()->first();
+        if($isCoord->coordinator_id !== $user->id){
+            return Redirect::to('/');
+        }
     }
 });
 
