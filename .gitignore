@@ -3,3 +3,4 @@
 .ebextensions
 application/config/database.php
 application/config/local/*
+application/config/local/*
