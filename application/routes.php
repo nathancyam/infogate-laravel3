@@ -73,6 +73,13 @@ Route::filter('admin', function(){
     }
 });
 
+Route::filter('onlyadmin', function(){
+    $user = User::find(Auth::user()->id);
+    if($user->role !== 'admin'){
+        return Redirect::to('/');
+    }
+});
+
 Event::listen('isCoord', function($user){
     if($user->role == 'admin'){
         return true;
@@ -91,6 +98,7 @@ Route::controller(Controller::detect());
 Route::get('login', 'user@login');
 Route::post('login', array('as'=>'postLogin', 'uses'=>'user@check'));
 Route::get('logout', 'user@logout');
+
 // =================== COURSES ===================
 Route::get('courses', array('as'=>'listcourses', 'uses'=>'course@index'));
 Route::get('course/new', array('as'=>'newcourse', 'uses'=>'course@new'));
