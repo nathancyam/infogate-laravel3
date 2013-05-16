@@ -15,7 +15,12 @@
             <p>Title: {{ $post->title }}</p>
             <p>Author: {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
-            <p>{{ Button::small_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}</p>
+            <p>
+                {{ Button::small_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}
+                @if(User::find(Auth::user()->id)->role !== 'student')
+                {{ Button::small_link(URL::to_route('approvepost', array($course, $subject, $topic, $post->id)), 'Approve')}}
+                @endif
+            </p>
         <div>
     @endforeach
 </div>

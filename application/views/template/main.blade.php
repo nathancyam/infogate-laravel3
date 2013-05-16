@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <title>Wordpush</title>
+    <title>Infogate</title>
     {{ Asset::container('bootstrapper')->styles() }}
     {{ Asset::container('bootstrapper')->scripts() }}
 </head>
@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="hero-unit">
             <h1>Infogate</h1>
-            <h2>Eduction Portal</h2>
+            <h2>Education Portal</h2>
         </div>
         <div class='navbar navbar-inverse'>
             <div class='navbar-inner nav-collapse' style="height: auto;">

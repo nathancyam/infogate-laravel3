@@ -73,4 +73,10 @@ class Post_Controller extends Base_Controller
         $updated_post->save();
         return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));	
 	}
+
+    public function action_approve($course, $subject, $topic_id, $post_id)
+    {
+        // Write approval code here
+        echo "I approve of this post!";
+    }
 }

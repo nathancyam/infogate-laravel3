@@ -125,5 +125,6 @@ Route::get('(:any)/(:any)/(:any)/posts', array('as'=>'listposts', 'uses'=>'post@
 Route::get('(:any)/(:any)/(:any)/posts/new', array('as'=>'posts', 'uses'=>'post@new'));
 Route::post('(:any)/(:any)/(:any)/posts/new', array('as'=>'newpost','uses'=>'post@add'));
 Route::get('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'editpost', 'uses'=>'post@edit'));
-Route::put('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'posts', 'uses'=>'post@update'));
+Route::put('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'updateposts', 'uses'=>'post@update'));
+Route::get('(:any)/(:any)/(:num)/post/(:num)/approve', array('as'=>'approvepost', 'uses'=>'post@approve'));
 

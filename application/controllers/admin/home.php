@@ -1,6 +1,6 @@
 <?php
 
-class Admin_Controller extends Base_Controller
+class Admin_Home_Controller extends Base_Controller
 {
 	public function __construct()
 	{
@@ -11,7 +11,7 @@ class Admin_Controller extends Base_Controller
 
 	public function action_index()
 	{
-		return View::make('admin.panel');	
+		return View::make('admin.panel');
 	}
 
 }
