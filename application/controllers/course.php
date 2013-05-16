@@ -2,6 +2,12 @@
 
 class Course_Controller extends Base_Controller
 {
+	public function __construct(){
+		parent::__construct();
+		$this->filter('before','auth');
+		$this->filter('before','admin')->only('add','new','edit','update');
+	}
+
 	public function action_index()
 	{
         $courses = Course::with('coordinator_id')->all();
@@ -42,7 +48,7 @@ class Course_Controller extends Base_Controller
             'code' => $get_course->code);
         return View::make('forms.course', $data);
     }
-    
+
     public function action_update($code)
     {
         $new_course = Course::where('code','=',$code)->first();
