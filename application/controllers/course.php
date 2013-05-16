@@ -10,7 +10,7 @@ class Course_Controller extends Base_Controller
 
 	public function action_index()
 	{
-        $courses = Course::with('coordinator_id')->all();
+        $courses = Course::all();
         return View::make('main.courses')
             ->with('courses',$courses);
 	}

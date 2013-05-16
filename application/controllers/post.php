@@ -20,7 +20,7 @@ class Post_Controller extends Base_Controller
         return View::make('main.posts', $data);
 	}
 
-	public function action_new($course, $subject, $topic)
+	public function action_new($course, $subject, $topic_id)
 	{
 		$user = Auth::user();
         $topic = Topic::find($topic_id);

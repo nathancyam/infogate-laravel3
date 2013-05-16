@@ -11,7 +11,7 @@
         </div>
     </div>
     @foreach($posts as $post)
-        <div class='container-fluid'>
+        <div>
             <p>Title: {{ $post->title }}</p>
             <p>Author: {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
