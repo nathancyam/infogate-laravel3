@@ -1,6 +1,25 @@
 $(document).ready(function(){
-    $('.dropdown-toggle').change(function(event){
-        event.preventDefault();
-        console.log("A change!");
+    $('#userrole').change(function(){
+    	var role;
+    	var roleChosen = parseInt($('#userrole').val());
+    	switch(roleChosen){
+    		case 0:
+    			role = "admin";
+    			break;
+    		case 1:
+    			role = "coordinator";
+    			break;
+    		case 2:
+    			role = "teacher";
+    			break;
+    		case 3:
+    			role = "student";
+    			break;
+    		default:
+    			break;
+    	}
+    	$.get(BASE+'/role/'+role, function(data){
+    		$('#table').html(data);
+    	});
     });
 });
