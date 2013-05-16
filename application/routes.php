@@ -87,35 +87,10 @@ Event::listen('isCoord', function($user){
 
 Route::controller(Controller::detect());
 
-Route::get('login', function(){
-    return View::make('main.login');
-});
-
-Route::post('login', array('as'=>'postLogin', 'do'=>function(){
-    $userdata = array(
-        'username'=>Input::get('username'),
-        'password'=>Input::get('password')
-    );
-    $rules = array(
-        'username' => 'required',
-        'password' => 'required'
-    );
-    $validation = Validator::make($userdata, $rules);
-    if($validation->fails()){
-        return Redirect::to('login')->with_errors($validation);
-    }
-    if(Auth::attempt($userdata)){
-        return Redirect::to('/');
-    } else {
-        return Redirect::to('/');
-    }
-}));
-
-Route::get('logout', function(){
-    Auth::logout();
-    return Redirect::to('/');
-});
-
+// =================== USER LOGIN ===================
+Route::get('login', 'user@login');
+Route::post('login', array('as'=>'postLogin', 'uses'=>'user@check'));
+Route::get('logout', 'user@logout');
 // =================== COURSES ===================
 Route::get('courses', array('as'=>'listcourses', 'uses'=>'course@index'));
 Route::get('course/new', array('as'=>'newcourse', 'uses'=>'course@new'));

@@ -57,4 +57,9 @@ class Course_Controller extends Base_Controller
         $new_course->save();
         return Redirect::to(URL::to_route('listcourses'));
     }
+
+    public function action_delete($code)
+    {
+        $new_course = Course::where('code','=',$code)->delete();
+    }
 }
