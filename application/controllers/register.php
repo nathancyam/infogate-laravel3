@@ -30,8 +30,8 @@ class Register_Controller extends Base_Controller
             'fName' => Input::get('fName'),
             'sName' => Input::get('sName'),
             'password' => Input::get('password'),
-            'email' => Input::get('email')
-        );
+            'email' => Input::get('email'),
+            'role' => Input::get('role'));
         $rules = array(
             'fName' => 'required',
             'sName' => 'required',

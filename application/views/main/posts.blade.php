@@ -7,7 +7,7 @@
             <h2>Posts</h2>
         </div>
         <div class="pull-right">
-            {{ Button::primary_link(URL::current() . '/new', 'Create a new post') }}
+            {{ Button::primary_link(URL::current() . '/new', 'New Post') }}
         </div>
     </div>
     @foreach($posts as $post)
@@ -15,7 +15,7 @@
             <p>Title: {{ $post->title }}</p>
             <p>Author: {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
-            <p>{{ Button::link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}</p>
+            <p>{{ Button::small_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}</p>
         <div>
     @endforeach
 </div>

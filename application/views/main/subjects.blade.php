@@ -12,7 +12,7 @@
         </div>
         @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
             <div style="float: right;">
-                {{ Button::primary_link(URL::base() . '/' . $code->code . '/subject/new', 'Create a new subject')}}
+                {{ Button::primary_link(URL::base() . '/' . $code->code . '/subject/new', 'New Subject')}}
             </div>
         @endif
     </div>

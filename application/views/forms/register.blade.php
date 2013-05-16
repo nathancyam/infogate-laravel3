@@ -29,6 +29,9 @@
         <p>{{ Form::label('enrollment', 'Course Enrollment') }}</p>
         {{ Form::select('enrollment', array($courses)) }}
 
+        <p>{{ Form::label('role', 'Role') }}</p>
+        {{ Form::select('role', array('student'=>'Student')) }}
+
         <p>{{ Form::submit('Sign Up') }}</p>
 
         {{ Form::close() }}

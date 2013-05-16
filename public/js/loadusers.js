@@ -22,4 +22,8 @@ $(document).ready(function(){
     		$('#table').html(data);
     	});
     });
+    $("td").click(function(){
+    	console.log("class =" + $(this).attr("class"));
+    	console.log("contents = " + $(this).text());
+    })
 });
