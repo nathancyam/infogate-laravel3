@@ -14,6 +14,10 @@
             <p>{{ Form::label('body', 'Content of Topic') }}</p>
             <p>{{ Form::textarea('body', Input::old('body')) }}</p>
 
+            <p>Enter a link on each new line</p>
+            <p>{{ Form::label('links', 'Links') }}</p>
+            <p>{{ Form::textarea('links', Input::old('links')) }}</p>
+
             <p>{{ Form::submit('Create new post') }}</p>
 
         {{ Form::close() }}
@@ -28,6 +32,10 @@
 
             <p>{{ Form::label('body', 'Content of Topic') }}</p>
             <p>{{ Form::textarea('body', Input::old('body', $post->body)) }}</p>
+
+            <p>Enter a link on each new line</p>
+            <p>{{ Form::label('links', 'Links') }}</p>
+            <p>{{ Form::textarea('links', Input::old('body', $post->links)) }}</p>
 
             <p>{{ Form::submit('Update this post') }}</p>
 
