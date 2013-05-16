@@ -8,7 +8,9 @@ $navArray = array(
 
 if (Auth::user()->role == 'admin'){
     array_push($navArray, array(Navigation::HEADER, 'Admin Panel'));
+    array_push($navArray, array('Admin Home', URL::to_action('admin')));
     array_push($navArray, array('Courses', URL::to_route('listcourses')));
+    array_push($navArray, array('Users', URL::to_action('admin@users')));
 }
 
 array_push($navArray, array(Navigation::HEADER, 'Courses'));
