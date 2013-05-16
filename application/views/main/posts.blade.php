@@ -4,7 +4,9 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='pull-left'>
-            <h2>Posts</h2>
+            <h2>
+                Posts for {{ strtoupper($subject) }} - {{ Topic::find($topic)->name }}
+            </h2>
         </div>
         <div class="pull-right">
             {{ Button::primary_link(URL::current() . '/new', 'New Post') }}
@@ -12,16 +14,20 @@
     </div>
     @foreach($posts as $post)
         <div>
-            <p>Title: {{ $post->title }}</p>
-            <p>Author: {{ $post->user()->first()->username }}</p>
+            <p><b>Title:</b> {{ $post->title }}</p>
+            <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
             <?php
                 $links = explode("\n", $post->links);
-                foreach($links as $link){
-                    $formattedlink = "<a href=http://" . $link . ">" . $link . "</a>";
-                    echo "<p id='link'>";
-                    echo HTML::decode($formattedlink);
-                    echo "</p>";
+                if(!($post->links == "")){
+                    echo "<hr />";
+                    echo "<h4>Links</h4>";
+                    foreach($links as $link){
+                        $formattedlink = "<a href=http://" . $link . ">" . $link . "</a>";
+                        echo "<p id='link'>";
+                        echo HTML::decode($formattedlink);
+                        echo "</p>";
+                    }
                 }
             ?>
             <p>
