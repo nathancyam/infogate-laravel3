@@ -57,6 +57,10 @@ class Post_Controller extends Base_Controller
         $edit_Post = Post::find($post_id);
         $this_topic = $edit_Post->topic()->first();
         $user = Auth::user();
+        // Check if the user is the author, if not redirect.
+        if($edit_Post->author_id !== $user->id){
+            return Redirect::to('/');
+        }
         $data = array(
             'isNew' => false,
             'user' => $user,
