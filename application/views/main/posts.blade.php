@@ -17,14 +17,16 @@
             <p><b>Title:</b> {{ $post->title }}</p>
             <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
-            <hr />
-            <h4>Links</h4>
             <?php
                 $links = $post->working_links;
-                for($i=0; $i<sizeof($links); $i++){
-                    echo '<ul>';
-                    echo '<li>'.$links[$i] . '</li>';
-                    echo '</ul>';;
+                if($links){
+                    echo "<hr />";
+                    echo "<h4>Links</h4>";
+                    for($i=0; $i<sizeof($links); $i++){
+                        echo '<ul>';
+                        echo '<li>'.$links[$i] . '</li>';
+                        echo '</ul>';;
+                    }
                 }
             ?>
             <p>

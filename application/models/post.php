@@ -21,6 +21,8 @@ class Post extends Eloquent {
                 array_push($arrayLinks, HTML::decode($formattedlink));
             }
             return $arrayLinks;
+        } else {
+            return false;
         }
     }
 }
