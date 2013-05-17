@@ -6,9 +6,11 @@ class Post extends Eloquent {
     {
         return $this->belongs_to('User','author_id');
     }
+
     public function topic(){
         return $this->belongs_to('Topic','topic_id');
     }
+
     public function get_working_links(){
         $arrayLinks = array();
         $dbLinks = $this->get_attribute('links');

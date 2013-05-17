@@ -22,11 +22,8 @@ class Register_Controller extends Base_Controller
             return Redirect::to(URL::to_action('register@index'))
                 ->with_input();
         }
-        $surname = Input::get('sName');
-        $forename = Input::get('fName');
-        $username = strtolower(substr($forename,0,2).substr($surname,0,4));
         $new_user = array(
-            'username' => $username,
+            'username' => array('forename'=>Input::get('fName'), 'surname'=>Input::get('sName')),
             'fName' => Input::get('fName'),
             'sName' => Input::get('sName'),
             'password' => Input::get('password'),
@@ -47,14 +44,14 @@ class Register_Controller extends Base_Controller
         $user->save();
 
         $new_enrollment = array(
-            'user_id' => User::where('username','=',$username)->first()->id,
+            'user_id' => $user->id,
             'course_id' => Input::get('enrollment')
         );
         $enrol = new Enrollment($new_enrollment);
         $enrol->save();
 
         $userdata = array(
-            'username' => $username,
+            'username' => $user->username,
             'password' => $password);
         if(Auth::attempt($userdata)){
             return Redirect::to('/');
