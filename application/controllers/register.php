@@ -30,9 +30,10 @@ class Register_Controller extends Base_Controller
             'email' => Input::get('email'),
             'role' => Input::get('role'));
         $rules = array(
-            'fName' => 'required',
-            'sName' => 'required',
-            'password' => 'required'
+            'fName' => 'required|alpha',
+            'sName' => 'required|alpha',
+            'email' => 'required|email',
+            'password' => 'required|min:5'
         );
         $v = Validator::make($new_user, $rules);
         if($v->fails()){
