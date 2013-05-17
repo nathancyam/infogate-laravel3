@@ -94,6 +94,16 @@ Event::listen('isCoord', function($user){
 
 Route::controller(Controller::detect());
 
+// =================== NOTES ===================
+// All filtering for the routes are described in the controllers
+
+// =================== ROUTE + CONTROLLER RULES ===================
+// controller@index = Goes to the list of items defined by the user
+// controller@new = Creates a new item
+// controller@add = Adds the new item to the database
+// controller@edit = Opens a form for the user to edit the item
+// controller@update = Saves the edited item to the database
+
 // =================== USER LOGIN ===================
 Route::get('login', 'user@login');
 Route::post('login', array('as'=>'postLogin', 'uses'=>'user@check'));
