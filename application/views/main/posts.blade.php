@@ -17,17 +17,12 @@
             <p><b>Title:</b> {{ $post->title }}</p>
             <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
             <p>{{ $post->body }}</p>
+            <hr />
+            <h4>Links</h4>
             <?php
-                $links = explode("\n", $post->links);
-                if(!($post->links == "")){
-                    echo "<hr />";
-                    echo "<h4>Links</h4>";
-                    foreach($links as $link){
-                        $formattedlink = "<a href=http://" . $link . ">" . $link . "</a>";
-                        echo "<p id='link'>";
-                        echo HTML::decode($formattedlink);
-                        echo "</p>";
-                    }
+                $links = $post->working_links;
+                for($i=0; $i<sizeof($links); $i++){
+                    echo $links[$i];
                 }
             ?>
             <p>
