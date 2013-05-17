@@ -21,5 +21,4 @@ class Post extends Eloquent {
             return $arrayLinks;
         }
     }
-
 }

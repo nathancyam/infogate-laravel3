@@ -70,6 +70,7 @@ class Post_Controller extends Base_Controller
         $updated_post = Post::find($post_id);
         $updated_post->title = Input::get('title');
         $updated_post->body = Input::get('body');
+        $updated_post->links = Input::get('links');
         $updated_post->save();
         return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     }

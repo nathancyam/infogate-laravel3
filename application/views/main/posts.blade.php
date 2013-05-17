@@ -22,7 +22,9 @@
             <?php
                 $links = $post->working_links;
                 for($i=0; $i<sizeof($links); $i++){
-                    echo $links[$i];
+                    echo '<ul>';
+                    echo '<li>'.$links[$i] . '</li>';
+                    echo '</ul>';;
                 }
             ?>
             <p>
