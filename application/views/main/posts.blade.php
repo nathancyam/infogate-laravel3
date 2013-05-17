@@ -28,10 +28,12 @@
                 }
             ?>
             <p>
+                @if(User::find(Auth::user()->id)->id == $post->author_id)
                 {{ Button::small_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}
+                @endif
                 @if(User::find(Auth::user()->id)->role !== 'student')
-                {{ Button::small_primary_link(URL::to_route('approvepost', array($course, $subject, $topic, $post->id)), 'Approve')}}
-                {{ Button::small_danger_link(URL::to_route('disapprovepost', array($course, $subject, $topic, $post->id)), 'Disapprove')}}
+                    {{ Button::small_primary_link(URL::to_route('approvepost', array($course, $subject, $topic, $post->id)), 'Approve')}}
+                    {{ Button::small_danger_link(URL::to_route('disapprovepost', array($course, $subject, $topic, $post->id)), 'Disapprove')}}
                 @endif
             </p>
         <div>
