@@ -2,14 +2,14 @@
 
 class Subject_Controller extends Base_Controller
 {
-	public function __construct(){
-		parent::__construct();
-		$this->filter('before','auth');
-		$this->filter('before','admin')->only('add','new','edit','update');
-	}
+    public function __construct(){
+        parent::__construct();
+        $this->filter('before','auth');
+        $this->filter('before','admin')->only('add','new','edit','update');
+    }
 
-	public function action_index($course)
-	{
+    public function action_index($course)
+    {
         $query = Course::where('code','=',$course)->first();
         $subjects = Subject::where('course_id','=',$query->id)->get();
         $data = array(
@@ -17,18 +17,18 @@ class Subject_Controller extends Base_Controller
                 'code' => $query
             );
         return View::make('main.subjects', $data);
-	}
+    }
 
-	public function action_new($course)
-	{
+    public function action_new($course)
+    {
         $query = Course::where('code','=',$course)->first();
         return View::make('forms.subject')
             ->with('isNew', true)
             ->with('course', $query);
-	}
+    }
 
-	public function action_add($course)
-	{
+    public function action_add($course)
+    {
         $new_subject = array(
             'code' => Input::get('code'),
             'name' => Input::get('name'),
