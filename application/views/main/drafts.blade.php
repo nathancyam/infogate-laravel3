@@ -9,7 +9,7 @@
             </h2>
         </div>
         <div class="pull-right">
-            {{ Button::primary_link(URL::current() . '/new', 'New Post') }}
+            {{ Button::primary_link(URL::to_route('posts', array($course, $subject, $topic)), 'New Post') }}
         </div>
     </div>
     <div>
@@ -54,11 +54,13 @@
                     {{ Button::mini_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}
                 @endif
                 @if(User::find(Auth::user()->id)->role !== 'student')
-                    {{ Button::mini_primary_link(URL::to_route('approvepost', array($course, $subject, $topic, $post->id)), 'Approve')}}
+                    {{ Button::mini_primary_normal('Approve', array('id'=>'btn_Approve', 'data-link'=>URL::to_route('approvepost', array($course, $subject, $topic, $post->id)))) }}
                     {{ Button::mini_danger_link(URL::to_route('disapprovepost', array($course, $subject, $topic, $post->id)), 'Disapprove')}}
                 @endif
             </p>
         </div>
     @endforeach
 </div>
+{{ HTML::script('js/bootbox.min.js') }}
+{{ HTML::script('js/posts.js') }}
 @endsection

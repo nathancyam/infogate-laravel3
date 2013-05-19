@@ -97,7 +97,6 @@ class Post_Controller extends Base_Controller
         $post = Post::find($post_id);
         $post->is_draft = 0;
         $post->save();
-        return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     }
 
     public function action_disapprove($course, $subject, $topic_id, $post_id)
