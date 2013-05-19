@@ -32,7 +32,7 @@ class Register_Controller extends Base_Controller
         $rules = array(
             'fName' => 'required|alpha',
             'sName' => 'required|alpha',
-            'email' => 'required|alpha',
+            'email' => 'required|email',
             'password' => 'required|min:5'
         );
         $v = Validator::make($new_user, $rules);
