@@ -55,7 +55,7 @@
                 @endif
                 @if(User::find(Auth::user()->id)->role !== 'student')
                     {{ Button::mini_primary_normal('Approve', array('id'=>'btn_Approve', 'data-link'=>URL::to_route('approvepost', array($course, $subject, $topic, $post->id)))) }}
-                    {{ Button::mini_danger_link(URL::to_route('disapprovepost', array($course, $subject, $topic, $post->id)), 'Disapprove')}}
+                    {{ Button::mini_danger_normal('Delete', array('id'=>'btn_Delete', 'data-link'=>URL::to_route('deletepost', array($course, $subject, $topic, $post->id)))) }}
                 @endif
             </p>
         </div>

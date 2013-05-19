@@ -92,15 +92,16 @@ class Post_Controller extends Base_Controller
         return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     }
 
+    public function action_delete($course, $subject, $topic_id, $post_id)
+    {
+        $post = Post::find($post_id);
+        $post->delete();
+    }
+
     public function action_approve($course, $subject, $topic_id, $post_id)
     {
         $post = Post::find($post_id);
         $post->is_draft = 0;
         $post->save();
-    }
-
-    public function action_disapprove($course, $subject, $topic_id, $post_id)
-    {
-        echo "I do not approve";
     }
 }
