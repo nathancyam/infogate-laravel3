@@ -5,12 +5,23 @@
     <div class='row'>
         <div class='pull-left'>
             <h2>
-                Posts for {{ strtoupper($subject) }} - {{ Topic::find($topic)->name }}
+               Draft Posts for {{ strtoupper($subject) }} - {{ Topic::find($topic)->name }}
             </h2>
         </div>
         <div class="pull-right">
             {{ Button::primary_link(URL::current() . '/new', 'New Post') }}
         </div>
+    </div>
+    <div>
+        <?php
+            echo Navigation::tabs(
+              Navigation::links(
+                array(
+                  array('Posts', URL::to_route('listposts', array($course, $subject, $topic))),
+                  array('Drafts', URL::current(), true))
+              )
+            );
+        ?>
     </div>
     @foreach($posts as $post)
         <div class='row-fluid'>

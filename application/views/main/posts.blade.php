@@ -12,6 +12,15 @@
             {{ Button::primary_link(URL::current() . '/new', 'New Post') }}
         </div>
     </div>
+    <?php
+        echo Navigation::tabs(
+          Navigation::links(
+            array(
+              array('Posts', URL::current(), true),
+              array('Drafts', URL::current() . "/drafts"))
+          )
+        );
+    ?>
     @foreach($posts as $post)
         <div class='row-fluid'>
             <div id="userinfo" class="span2">
@@ -41,10 +50,6 @@
                 <b>Actions:</b>
                 @if(User::find(Auth::user()->id)->id == $post->author_id)
                     {{ Button::mini_link(URL::to_route('editpost', array($course, $subject, $topic, $post->id)), 'Edit this post')}}
-                @endif
-                @if(User::find(Auth::user()->id)->role !== 'student')
-                    {{ Button::mini_primary_link(URL::to_route('approvepost', array($course, $subject, $topic, $post->id)), 'Approve')}}
-                    {{ Button::mini_danger_link(URL::to_route('disapprovepost', array($course, $subject, $topic, $post->id)), 'Disapprove')}}
                 @endif
             </p>
         </div>

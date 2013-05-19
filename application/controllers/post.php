@@ -17,7 +17,7 @@ class Post_Controller extends Base_Controller
             'subject' => $subject,
             'topic' => $topic,
             'posts' => $posts);
-        return View::make('main.drafts', $data);
+        return View::make('main.posts', $data);
     }
 
     public function action_drafts($course, $subject, $topic)
@@ -29,7 +29,7 @@ class Post_Controller extends Base_Controller
             'subject' => $subject,
             'topic' => $topic,
             'posts' => $posts);
-        return View::make('main.posts', $data);
+        return View::make('main.drafts', $data);
     }
 
     public function action_new($course, $subject, $topic_id)
@@ -94,7 +94,10 @@ class Post_Controller extends Base_Controller
 
     public function action_approve($course, $subject, $topic_id, $post_id)
     {
-        echo "I do approve";
+        $post = Post::find($post_id);
+        $post->is_draft = 0;
+        $post->save();
+        return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     }
 
     public function action_disapprove($course, $subject, $topic_id, $post_id)
