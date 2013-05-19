@@ -11,7 +11,19 @@ class Post_Controller extends Base_Controller
     public function action_index($course, $subject, $topic)
     {
         $linkTopic = Topic::find($topic);
-        $posts = Post::where('topic_id','=',$linkTopic->id)->get();
+        $posts = Post::where('topic_id','=',$linkTopic->id)->where('is_draft','=',0)->get();
+        $data = array(
+            'course' => $course,
+            'subject' => $subject,
+            'topic' => $topic,
+            'posts' => $posts);
+        return View::make('main.drafts', $data);
+    }
+
+    public function action_drafts($course, $subject, $topic)
+    {
+        $linkTopic = Topic::find($topic);
+        $posts = Post::where('topic_id','=',$linkTopic->id)->where('is_draft','=',1)->get();
         $data = array(
             'course' => $course,
             'subject' => $subject,
@@ -38,6 +50,7 @@ class Post_Controller extends Base_Controller
             'body' => Input::get('body'),
             'topic_id' => Input::get('topic_id'),
             'author_id' => Input::get('author_id'),
+            'is_draft' => 1,
             'links' => Input::get('links'));
         $rules = array(
             'body' => 'required');
