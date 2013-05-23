@@ -4,28 +4,25 @@
     @if($isNew == true)
         {{ Form::open(URL::to_action('register@createuser')) }}
 
-        {{ $errors->first('fName', '<p class="error">:message</p>') }}
-        <p>{{ Form::label('fName', 'First Name:') }}</p>
-        <p>{{ Form::text('fName', Input::old('fName')) }}</p>
-
-        {{ $errors->first('sName', '<p class="error">:message</p>') }}
-        <p>{{ Form::label('sName', 'Surname') }}</p>
-        <p>{{ Form::text('sName', Input::old('sName')) }}</p>
-
-
+        {{ $errors->first('forename', '<p class="error">A forename is required.</p>') }}
+        {{ $errors->first('surname', '<p class="error">A surname is required.</p>') }}
+        {{ $errors->first('email', '<p class="error">A valid e-mail is required.</p>') }}
         {{ $errors->first('password', '<p class="error">:message</p>') }}
+
+        <p>{{ Form::label('forename', 'First Name:') }}</p>
+        <p>{{ Form::text('forename', Input::old('forename')) }}</p>
+
+        <p>{{ Form::label('surname', 'Surname') }}</p>
+        <p>{{ Form::text('surname', Input::old('surname')) }}</p>
 
         <p>{{ Form::label('password', 'Password') }}</p>
         <p>{{ Form::password('password') }}</p>
+        <p>{{ Form::label('attribute_confirmation', 'Confirm Password') }}</p>
+        <p>{{ Form::password('attribute_confirmation') }}</p>
 
-        <p>{{ Form::label('passwordcheck', 'Re-type Password') }}</p>
-        <p>{{ Form::password('passwordcheck') }}</p>
-
-        {{ $errors->first('email', '<p class="error">:message</p>') }}
         <p>{{ Form::label('email', 'E-mail') }}</p>
         <p>{{ Form::email('email') }}</p>
 
-        {{ $errors->first('enrollment', '<p class="error">:message</p>') }}
         <p>{{ Form::label('enrollment', 'Course Enrollment') }}</p>
         {{ Form::select('enrollment', array($courses)) }}
 
@@ -38,15 +35,16 @@
     @else
         {{ Form::open(URL::to_action('account@postupdate')) }}
 
-        {{ $errors->first('fName', '<p class="error">:message</p>') }}
-        <p>{{ Form::label('fName', 'First Name:') }}</p>
-        <p>{{ Form::text('fName', Input::old('fName', $user->fname)) }}</p>
+        {{ $errors->first('forename', '<p class="error">A forename is required.</p>') }}
+        {{ $errors->first('surname', '<p class="error">A surname is required.</p>') }}
+        {{ $errors->first('email', '<p class="error">A valid e-mail is required.</p>') }}
 
-        {{ $errors->first('sName', '<p class="error">:message</p>') }}
-        <p>{{ Form::label('sName', 'Surname') }}</p>
-        <p>{{ Form::text('sName', Input::old('sName', $user->sname)) }}</p>
+        <p>{{ Form::label('forename', 'First Name:') }}</p>
+        <p>{{ Form::text('forename', Input::old('forename', $user->fname)) }}</p>
 
-        {{ $errors->first('email', '<p class="error">:message</p>') }}
+        <p>{{ Form::label('surname', 'Surname') }}</p>
+        <p>{{ Form::text('surname', Input::old('surname', $user->sname)) }}</p>
+
         <p>{{ Form::label('email', 'E-mail') }}</p>
         <p>{{ Form::email('email', $user->email) }}</p>
 
@@ -54,4 +52,5 @@
 
         {{ Form::close() }}
     @endif
+{{ HTML::style('css/register.css') }}
 @endsection

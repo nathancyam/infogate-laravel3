@@ -62,7 +62,7 @@ class Post_Controller extends Base_Controller
         }
         $post = new Post($new_post);
         $post->save();
-        return Redirect::to(URL::to_route('listposts', array($course, $subject, $topic)));
+        return Redirect::to(URL::to_route('listdrafts', array($course, $subject, $topic)));
     }
 
     public function action_edit($course, $subject, $topic, $post_id)
@@ -96,7 +96,7 @@ class Post_Controller extends Base_Controller
     {
         $post = Post::find($post_id);
         $post->delete();
-        return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
+        return Redirect::to(URL::to_route('listdrafts',array($course, $subject, $topic_id)));
     }
 
     public function action_approve($course, $subject, $topic_id, $post_id)

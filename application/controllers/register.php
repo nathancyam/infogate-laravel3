@@ -7,7 +7,7 @@ class Register_Controller extends Base_Controller
         $listCourse = Course::all();
         $selectArray = array();
         foreach($listCourse as $course){
-            $selectArray[$course->id] = $course->code;
+            $selectArray[$course->id] = strtoupper($course->code);
         }
         return View::make('forms.register')
             ->with('courses', $selectArray)
@@ -16,16 +16,10 @@ class Register_Controller extends Base_Controller
 
     public function action_createuser()
     {
-        $passwordcheck = Input::get('passwordcheck');
-        $password = Input::get('password');
-        if($passwordcheck !== $password){
-            return Redirect::to(URL::to_action('register@index'))
-                ->with_input();
-        }
         $new_user = array(
             'username' => array('forename'=>Input::get('fName'), 'surname'=>Input::get('sName')),
-            'fName' => Input::get('fName'),
-            'sName' => Input::get('sName'),
+            'fName' => Input::get('forename'),
+            'sName' => Input::get('surname'),
             'password' => Input::get('password'),
             'email' => Input::get('email'),
             'role' => Input::get('role'));
@@ -33,11 +27,12 @@ class Register_Controller extends Base_Controller
             'fName' => 'required|alpha',
             'sName' => 'required|alpha',
             'email' => 'required|email',
-            'password' => 'required|min:5'
+            'password' => 'required|min:5|confirmed'
         );
         $v = Validator::make($new_user, $rules);
         if($v->fails()){
-            return Redirect::to(URL::to_action('register@index'))
+            var_dump($v);
+            return Redirect::to(URL::to_action('register'))
                 ->with_errors($v)
                 ->with_input();
         }
