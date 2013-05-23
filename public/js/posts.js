@@ -42,6 +42,4 @@ function equalHeight(group) {
 }
 
 $(document).ready(function(){
-    equalHeight($('.post-author'));
-    equalHeight($('.post-body'));
 })

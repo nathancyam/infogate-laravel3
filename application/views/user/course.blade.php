@@ -9,7 +9,7 @@
         The subjects that you are enrolled in are:
         <ul>
             @foreach($subjects as $subject)
-                <li>{{ $subject->code }}: {{ $subject->name }}</li>
+                <li>{{ strtoupper($subject->code) }}: {{ $subject->name }}</li>
             @endforeach
         </ul>
     </div>
