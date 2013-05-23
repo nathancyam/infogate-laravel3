@@ -15,20 +15,14 @@ $(document).on("click", "#btn_Approve", function(event){
     })
 })
 $(document).on("click", "#btn_Delete", function(event){
-    bootbox.confirm("Are you sure you delete this post?", function(result){
-        if (result){
-            var goHere = $('#btn_Delete').data('link');
-            $.ajax({
-                url: goHere,
-                type: 'DELETE',
-                success: function(result){
-                    console.log("Successfully deleted this post");
-                }
-            });
-        } else {
-            console.log("Not deleted yet");
+    var goHere = $('#btn_Delete').data('link');
+    $.ajax({
+        url: goHere,
+        type: 'DELETE',
+        success: function(result){
+            console.log("Successfully deleted this post");
         }
-    })
+    });
 })
 function equalHeight(group) {
     var tallest = 0;

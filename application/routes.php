@@ -138,5 +138,5 @@ Route::post('(:any)/(:any)/(:any)/posts/new', array('as'=>'newpost','uses'=>'pos
 Route::get('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'editpost', 'uses'=>'post@edit'));
 Route::put('(:any)/(:any)/(:num)/post/(:num)/edit', array('as'=>'updateposts', 'uses'=>'post@update'));
 Route::put('(:any)/(:any)/(:num)/post/(:num)/approve', array('as'=>'approvepost', 'uses'=>'post@approve'));
-Route::delete('(:any)/(:any)/(:num)/post/(:num)/delete', array('as'=>'deletepost', 'uses'=>'post@delete'));
+Route::get('(:any)/(:any)/(:num)/post/(:num)/delete', array('as'=>'deletepost', 'uses'=>'post@delete'));
 

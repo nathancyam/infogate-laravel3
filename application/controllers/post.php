@@ -96,6 +96,7 @@ class Post_Controller extends Base_Controller
     {
         $post = Post::find($post_id);
         $post->delete();
+        return Redirect::to(URL::to_route('listposts',array($course, $subject, $topic_id)));
     }
 
     public function action_approve($course, $subject, $topic_id, $post_id)

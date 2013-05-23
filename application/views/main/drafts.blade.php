@@ -57,12 +57,27 @@
                 @endif
                 @if(User::find(Auth::user()->id)->role !== 'student')
                     {{ Button::mini_primary_normal('Approve', array('id'=>'btn_Approve', 'data-link'=>URL::to_route('approvepost', array($course, $subject, $topic, $post->id)))) }}
-                    {{ Button::mini_danger_normal('Delete', array('id'=>'btn_Delete', 'data-link'=>URL::to_route('deletepost', array($course, $subject, $topic, $post->id)))) }}
+                    {{ Button::mini_danger_link('#deletePost'.$post->id, 'Delete', array('data-toggle'=>"modal")) }}
                 @endif
             </p>
         </div>
+        <div id="deletePost{{ $post->id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Alert: Deleting Post</h3>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this post?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            {{ Button::danger_link(URL::to_route('deletepost', array($course, $subject, $topic, $post->id)), 'Delete') }}
+          </div>
+        </div>
     @endforeach
 </div>
+
+
 {{ HTML::style('css/posts.css') }}
 {{ HTML::script('js/bootbox.min.js') }}
 {{ HTML::script('js/posts.js') }}
