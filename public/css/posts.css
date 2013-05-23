@@ -5,11 +5,12 @@
 
 .post-author {
     padding: 5px;
-    background-color: #EEEEEE;
+    display: block;
 }
 
 .post-body {
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .post-links {

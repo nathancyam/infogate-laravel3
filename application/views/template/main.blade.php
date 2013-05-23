@@ -39,7 +39,7 @@
         </div>
         <div id='content' class='row-fluid'>
             <nav class='span2 sidebar'>
-                <div data-spy="affix" data-offset-left="200">
+                <div data-spy="affix">
                     @if ( Auth::guest() )
                     @else
                         @render('template.navigation')

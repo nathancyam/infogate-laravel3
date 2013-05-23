@@ -30,3 +30,18 @@ $(document).on("click", "#btn_Delete", function(event){
         }
     })
 })
+function equalHeight(group) {
+    var tallest = 0;
+    group.each(function() {
+        var thisHeight = $(this).height();
+        if(thisHeight > tallest) {
+            tallest = thisHeight;
+        }
+    });
+    group.height(tallest);
+}
+
+$(document).ready(function(){
+    equalHeight($('.post-author'));
+    equalHeight($('.post-body'));
+})
