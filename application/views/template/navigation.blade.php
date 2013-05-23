@@ -3,8 +3,7 @@
 $navArray = array(
         array(Navigation::HEADER, 'Navigation'),
         array('Home', URL::base()),
-        array('User Panel', URL::to_action('account')),
-        array('Applications', '#'));
+        array('User Panel', URL::to_action('account')));
 
 if (Auth::user()->role == 'admin'){
     array_push($navArray, array(Navigation::HEADER, 'Admin Panel'));
