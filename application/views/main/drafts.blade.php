@@ -24,27 +24,29 @@
         ?>
     </div>
     @foreach($posts as $post)
-        <div class='row-fluid'>
-            <div id="userinfo" class="span2">
-                <p><b>Title:</b> {{ $post->title }}</p>
-                <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
+        <div class="row-fluid posts shadow">
+            <div class='row-fluid'>
+                <div id="userinfo" class="span2 post-author pull-left">
+                    <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
+                </div>
+                <div id="postbody" class="span10 post-body pull-right">
+                    <p><b>Title:</b> {{ $post->title }}</p>
+                    <p>{{ $post->body }}</p>
+                </div>
             </div>
-            <div id="postbody" class="span8">
-                <p>{{ $post->body }}</p>
-            </div>
-            <div id='userlinks'>
-                <?php
-                    $links = $post->working_links;
-                    if($links){
-                        echo "<hr />";
-                        echo "<h4>Links</h4>";
-                        for($i=0; $i<sizeof($links); $i++){
-                            echo '<ul>';
-                            echo '<li>'.$links[$i] . '</li>';
-                            echo '</ul>';;
-                        }
-                    }
-                ?>
+            <div class="row-fluid">
+                <div class="span2 post-author">
+                    <p><b>Links:</b></p>
+                </div>
+                <div id="linkbody" class="span10 post-links">
+                    @if ($post->working_links)
+                        @for($i=0; $i<sizeof($post->working_links); $i++)
+                            <ul>
+                            <li>{{ $post->working_links[$i] }}</li>
+                            </ul>
+                        @endfor
+                    @endif
+                </div>
             </div>
         </div>
         <div id="userbuttons">
@@ -61,6 +63,7 @@
         </div>
     @endforeach
 </div>
+{{ HTML::style('css/posts.css') }}
 {{ HTML::script('js/bootbox.min.js') }}
 {{ HTML::script('js/posts.js') }}
 @endsection
