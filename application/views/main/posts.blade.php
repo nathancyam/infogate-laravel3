@@ -22,27 +22,27 @@
         );
     ?>
     @foreach($posts as $post)
-        <div class='row-fluid'>
-            <div id="userinfo" class="span2">
+        <div class='row-fluid posts'>
+            <div id="userinfo" class="span2 post-author">
                 <p><b>Title:</b> {{ $post->title }}</p>
                 <p><b>Author:</b> {{ $post->user()->first()->username }}</p>
             </div>
             <div id="postbody" class="span8">
                 <p>{{ $post->body }}</p>
             </div>
-            <div id='userlinks'>
-                <?php
-                    $links = $post->working_links;
-                    if($links){
-                        echo "<hr />";
-                        echo "<h4>Links</h4>";
-                        for($i=0; $i<sizeof($links); $i++){
-                            echo '<ul>';
-                            echo '<li>'.$links[$i] . '</li>';
-                            echo '</ul>';;
-                        }
-                    }
-                ?>
+        </div>
+        <div class="row-fluid">
+            <div class="span2">
+                <p><b>Links:</b></p>
+            </div>
+            <div id="linkbody" class="span8">
+                @if ($post->working_links)
+                    @for($i=0; $i<sizeof($post->working_links); $i++)
+                        <ul>
+                        <li>{{ $post->working_links[$i] }}</li>
+                        </ul>
+                    @endfor
+                @endif
             </div>
         </div>
         <div id="userbuttons">
@@ -55,4 +55,5 @@
         </div>
     @endforeach
 </div>
+{{ HTML::style('css/posts.css') }}
 @endsection

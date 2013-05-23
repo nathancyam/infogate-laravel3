@@ -37,7 +37,6 @@
                 </ul>
             </div>
         </div>
-        <nav>
         <div id='content' class='row-fluid'>
             <nav class='span2 sidebar'>
                 @if ( Auth::guest() )
