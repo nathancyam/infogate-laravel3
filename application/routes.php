@@ -95,7 +95,7 @@ Event::listen('isCoord', function($user){
 Route::controller(Controller::detect());
 
 // =================== NOTES ===================
-// All filtering for the routes are described in the controllers
+// All filtering for the routes are found in the controllers construct methods
 
 // =================== ROUTE + CONTROLLER RULES ===================
 // controller@index = Goes to the list of items defined by the user

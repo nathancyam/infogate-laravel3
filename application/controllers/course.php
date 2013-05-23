@@ -2,30 +2,30 @@
 
 class Course_Controller extends Base_Controller
 {
-	public function __construct(){
-		parent::__construct();
-		$this->filter('before','auth');
-		$this->filter('before','admin')->only('add','new','edit','update');
-	}
+    public function __construct(){
+        parent::__construct();
+        $this->filter('before','auth');
+        $this->filter('before','admin')->only('add','new','edit','update');
+    }
 
-	public function action_index()
-	{
+    public function action_index()
+    {
         $courses = Course::all();
         return View::make('main.courses')
             ->with('courses',$courses);
-	}
+    }
 
-	public function action_new()
-	{
+    public function action_new()
+    {
         $isNew = true;
         $user = Auth::user();
-        return view::make('forms.course')
+        return View::make('forms.course')
             ->with('isNew', $isNew)
             ->with('user', $user);
-	}
+    }
 
-	public function action_add()
-	{
+    public function action_add()
+    {
         $new_course = array(
             'name' => Input::get('name'),
             'code' => Input::get('code'),
@@ -34,16 +34,16 @@ class Course_Controller extends Base_Controller
         $course = new Course($new_course);
         $course->save();
         return Redirect::to('courses');
-	}
+    }
 
-	public function action_edit($code)
-	{
+    public function action_edit($code)
+    {
         $isNew = false;
         $user = Auth::user();
-        $get_course = Course::where('code','=',$code)->first();
+        $get_course = Course::where('code','=',strtolower($code))->first();
         $data = array(
-            'user' => $user,
             'isNew' => $isNew,
+            'user' => $user,
             'name' => $get_course->name,
             'code' => $get_course->code);
         return View::make('forms.course', $data);
