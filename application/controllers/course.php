@@ -28,7 +28,7 @@ class Course_Controller extends Base_Controller
 	{
         $new_course = array(
             'name' => Input::get('name'),
-            'code' => strtoupper(Input::get('code')),
+            'code' => Input::get('code'),
             'coordinator_id' => Input::get('coordinator_id')
         );
         $course = new Course($new_course);

@@ -39,10 +39,12 @@
         </div>
         <div id='content' class='row-fluid'>
             <nav class='span2 sidebar'>
-                @if ( Auth::guest() )
-                @else
-                    @render('template.navigation')
-                @endif
+                <div data-spy="affix" data-offset-left="200">
+                    @if ( Auth::guest() )
+                    @else
+                        @render('template.navigation')
+                    @endif
+                <div>
             </nav>
             <div class="span10 main">
                 @yield('content')

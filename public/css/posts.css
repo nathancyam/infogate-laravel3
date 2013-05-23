@@ -1,6 +1,6 @@
 .posts {
-    border-style: dotted;
-    border-width: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .post-author {
@@ -8,10 +8,20 @@
     background-color: #EEEEEE;
 }
 
-.post-content {
+.post-body {
+    padding-top: 10px;
+}
 
+.post-links {
+    padding-top: 10px;
 }
 
 .post-buttons {
+    padding-top: 10px;
+}
 
+.shadow {
+    -moz-box-shadow:    0px 0px 0px 3px #ccc;
+    -webkit-box-shadow: 0px 0px 0px 3px #ccc;
+    box-shadow:         0px 0px 0px 3px #ccc;
 }
