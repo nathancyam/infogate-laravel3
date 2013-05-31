@@ -13,7 +13,7 @@ return array(
     |
      */
 
-    'url' => 'http://localhost/laravel',
+    'url' => 'http://localhost/infogate',
 
     /*
     |--------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 
         {{ $errors->first('description', '<p class="error">:message</p>') }}
         <p>{{ Form::label('description', 'Desciption') }}</p>
-        <p>{{ Form::textarea('description', Input::old('description')) }}</p>
+        <p>{{ Form::textarea('description', Input::old('description'), array('class'=>'field span11','rows'=>'10')) }}</p>
 
         <p>{{ Form::submit('Create Subject') }}</p>
 
@@ -35,7 +35,7 @@
 
         {{ $errors->first('description', '<p class="error">:message</p>') }}
         <p>{{ Form::label('description', 'Desciption') }}</p>
-        <p>{{ Form::textarea('description', Input::old('description', $info->description)) }}</p>
+        <p>{{ Form::textarea('description', Input::old('description', $info->description), array('class'=>'field span11', 'rows'=>'10')) }}</p>
 
         <p>{{ Form::submit('Update Subject') }}</p>
     @endif

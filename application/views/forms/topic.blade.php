@@ -9,7 +9,7 @@
             <p>{{ Form::text('name', Input::old('name')) }}</p>
 
             <p>{{ Form::label('content', 'Content of Topic') }}</p>
-            <p>{{ Form::textarea('content', Input::old('content')) }}</p>
+            <p>{{ Form::textarea('content', Input::old('content'), array('class'=>'field span11','rows'=>'10')) }}</p>
 
             <p>{{ Form::submit('Create new topic') }}</p>
 
@@ -22,7 +22,7 @@
             <p>{{ Form::text('name', Input::old('name', $info->name)) }}</p>
 
             <p>{{ Form::label('content', 'Content of Topic') }}</p>
-            <p>{{ Form::textarea('content', Input::old('content', $info->content)) }}</p>
+            <p>{{ Form::textarea('content', Input::old('content', $info->content), array('class'=>'field span11','rows'=>'10')) }}</p>
 
             <p>{{ Form::submit('Update this topic') }}</p>
         {{ Form::close()}}
