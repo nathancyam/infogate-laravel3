@@ -12,7 +12,7 @@
         </div>
         @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
             <div style='float: right;'>
-                {{ HTML::link_to_route('newcourse','Add a new course') }}
+                {{ Button::primary_link(URL::to_route('newcourse', 'Add Course'),'Add Course') }}
             </div>
         @endif
     </div>
