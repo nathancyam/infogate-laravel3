@@ -17,18 +17,19 @@ class Register_Controller extends Base_Controller
     public function action_createuser()
     {
         $new_user = array(
-            'username' => array('forename'=>Input::get('fName'), 'surname'=>Input::get('sName')),
+            'username' => array('forename'=>Input::get('forename'), 'surname'=>Input::get('surname')),
             'fName' => Input::get('forename'),
             'sName' => Input::get('surname'),
             'password' => Input::get('password'),
+            'password_confirmation' => Input::get('password_confirmation'),
             'email' => Input::get('email'),
             'role' => Input::get('role'));
         $rules = array(
             'fName' => 'required|alpha',
             'sName' => 'required|alpha',
             'email' => 'required|email',
-            'password' => 'required|min:5|confirmed'
-        );
+            'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required|min:5');
         $v = Validator::make($new_user, $rules);
         if($v->fails()){
             var_dump($v);
@@ -36,6 +37,7 @@ class Register_Controller extends Base_Controller
                 ->with_errors($v)
                 ->with_input();
         }
+        unset($new_user['password_confirmation']);
         $user = new User($new_user);
         $user->save();
 
@@ -46,6 +48,7 @@ class Register_Controller extends Base_Controller
         $enrol = new Enrollment($new_enrollment);
         $enrol->save();
 
+        $password = Input::get('password');
         $userdata = array(
             'username' => $user->username,
             'password' => $password);

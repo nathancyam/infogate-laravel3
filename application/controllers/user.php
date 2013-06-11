@@ -18,10 +18,10 @@ class User_Controller extends Base_Controller
         );
         $validation = Validator::make($userdata, $rules);
         if($validation->fails()){
-            return Redirect::to('login')->with_errors($validation);
+            return Redirect::to('/');
         }
         if(Auth::attempt($userdata)){
-            return Redirect::to('/');
+            return View::make('home.index');
         } else {
             return Redirect::to('/');
         }

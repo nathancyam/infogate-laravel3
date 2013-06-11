@@ -29,6 +29,7 @@
                                 </div>
                             </li>
                         @else
+                            <li class="navbar-text">Welcome back, {{ User::find(Auth::user()->id)->username }}</li>
                             <li>
                                 {{ HTML::link('logout', 'Logout?') }}
                             </li>

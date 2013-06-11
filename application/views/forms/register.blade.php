@@ -17,8 +17,8 @@
 
         <p>{{ Form::label('password', 'Password') }}</p>
         <p>{{ Form::password('password') }}</p>
-        <p>{{ Form::label('attribute_confirmation', 'Confirm Password') }}</p>
-        <p>{{ Form::password('attribute_confirmation') }}</p>
+        <p>{{ Form::label('password_confirmation', 'Confirm Password') }}</p>
+        <p>{{ Form::password('password_confirmation') }}</p>
 
         <p>{{ Form::label('email', 'E-mail') }}</p>
         <p>{{ Form::email('email') }}</p>
