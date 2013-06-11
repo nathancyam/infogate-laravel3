@@ -27,11 +27,11 @@
             <p>{{ Form::text('title', Input::old('title', $post->title)) }}</p>
 
             <p><b>{{ Form::label('body', 'Content of Topic') }}</b></p>
-            <p>{{ Form::textarea('body', Input::old('body', $post->body)) }}</p>
+            <p>{{ Form::textarea('body', Input::old('body', $post->body), array('class'=>'field span11','rows'=>'10')) }}</p>
 
             <p>Enter a link on each new line</p>
             <p><b>{{ Form::label('links', 'Links') }}</b></p>
-            <p>{{ Form::textarea('links', Input::old('body', $post->links)) }}</p>
+            <p>{{ Form::textarea('links', Input::old('links', $post->links), array('class'=>'field span11','rows'=>'3')) }}</p>
 
             <p>{{ Form::submit('Update this post') }}</p>
 
