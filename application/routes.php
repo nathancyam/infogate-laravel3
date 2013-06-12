@@ -105,6 +105,10 @@ Route::controller(Controller::detect());
 // controller@update = Saves the edited item to the database
 
 // =================== USER LOGIN ===================
+Route::get('help', array('as'=>'help', function(){
+    return View::make('main.help');
+}));
+
 Route::get('login', 'user@login');
 Route::post('login', array('as'=>'postLogin', 'uses'=>'user@check'));
 Route::get('logout', 'user@logout');

@@ -20,4 +20,7 @@ foreach($subjects as $subject){
     array_push($navArray, array(strtoupper($subject->code), URL::to_route('listtopics', array($code, $subject->code))));
 }
 
+array_push($navArray, array(Navigation::HEADER, 'Help'));
+array_push($navArray, array('Help', URL::to_route('help')));
+
 echo Navigation::lists( Navigation::links($navArray));
