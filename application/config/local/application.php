@@ -13,7 +13,7 @@ return array(
     |
      */
 
-    'url' => 'http://localhost/infogate',
+    'url' => 'http://localhost:8888/infogate',
 
     /*
     |--------------------------------------------------------------------------
