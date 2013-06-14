@@ -4,6 +4,8 @@
 <?php
     $user = User::find(Auth::user()->id);
     $checkCoord = Event::fire('isCoord', array($user));
+    $title = 'Courses';
+    $subtitle = 'Course List';
 ?>
 <div class='container-fluid'>
     <div class='row'>
@@ -19,10 +21,12 @@
     @foreach($courses as $acourse)
         <div style="container-fluid">
             <h3>{{ strtoupper($acourse->code) }}: {{ $acourse->name }}</h3>
-            <p>{{ Button::small_link(URL::to_route('listsubjects', array($acourse->code)), 'See subjects for ' . $acourse->name) }}</p>
-            @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
-                <p>{{ Button::small_link(URL::to_route('editcourse', array($acourse->code)), 'Update this course: ' . $acourse->name) }}</p>
-            @endif
+            <p>
+                {{ Button::small_link(URL::to_route('listsubjects', array($acourse->code)), 'View Subjects') }}
+                @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
+                    {{ Button::small_link(URL::to_route('editcourse', array($acourse->code)), 'Update course') }}
+                @endif
+            </p>
         </div>
     @endforeach
 </div>

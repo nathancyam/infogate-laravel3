@@ -28,7 +28,7 @@
                 </div>
                 <div id="postbody" class="span10 post-body pull-right">
                     <p><b>Title:</b> {{ $post->title }}</p>
-                    <p>{{ $post->body }}</p>
+                    <p>{{ $post->formatted_body }}</p>
                 </div>
             </div>
             <div class="row-fluid">

@@ -31,7 +31,7 @@
             <p>{{ Form::text('title', Input::old('title', $post->title)) }}</p>
 
             <p><b>{{ Form::label('body', 'Content of Topic') }}</b></p>
-            <p>{{ Form::textarea('body', Input::old('body', $post->body), array('class'=>'field span11','rows'=>'10')) }}</p>
+            <p>{{ Form::textarea('body', Input::old('body', $post->form_body), array('class'=>'field span11','rows'=>'10')) }}</p>
 
             <p>Enter a link on each new line</p>
             <p><b>{{ Form::label('links', 'Links') }}</b></p>

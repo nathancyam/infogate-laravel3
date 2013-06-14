@@ -25,4 +25,24 @@ class Post extends Eloquent {
             return false;
         }
     }
+
+    public function get_formatted_body(){
+        $rawBody = $this->get_attribute('body');
+        return HTML::decode($rawBody);
+    }
+
+    public function get_form_body(){
+        $rawBody = $this->get_attribute('body');
+        $order = array("<br />");
+        $replace = "\n";
+        $newBody = str_replace($order, $replace, $rawBody);
+        return $newBody;
+    }
+
+    public function set_body($body){
+        $order   = array("\r\n", "\n", "\r");
+        $replace = '<br />';
+        $newBody = str_replace($order, $replace, $body);
+        $this->set_attribute('body', $newBody);
+    }
 }
