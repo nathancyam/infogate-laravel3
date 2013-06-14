@@ -1,0 +1,14 @@
+.hero-picture {
+    background-image:url('http://localhost/infogate/img/bookshelf.png');
+    background-repeat:repeat;
+}
+
+.hero-picture h1 {
+    color:#FFFFFF;
+    text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+}
+
+.hero-picture h2 {
+    color:#FFFFFF;
+    text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+}

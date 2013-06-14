@@ -7,6 +7,7 @@
     {{ Asset::container('bootstrapper')->scripts() }}
 </head>
 <body>
+    {{ HTML::style('css/header.css') }}
     <div class='navbar navbar-inverse navbar-fixed-top'>
         <div class='navbar-inner nav-collapse' style="height: auto;">
             <div class='container'>
@@ -31,7 +32,7 @@
             </div>
         </div>
     </div>
-    <header class="hero-unit">
+    <header class="hero-unit hero-picture">
         <div class="container">
             <?php
             if(isset($title)){
