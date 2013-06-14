@@ -1,10 +1,14 @@
 @layout('template.main')
 
+<?php
+    $title = $topic->name;
+    $subtitle = 'Submit a post';
+?>
+
 @section('content')
     {{ Form::hidden('author_id',$user->id) }}
     {{ Form::hidden('topic_id',$topic->id) }}
 
-    <h4>Create a post for {{ $topic->name }}</h4>
     @if ($isNew == true)
         {{ Form::open(URL::current()) }}
             <p><b>{{ Form::label('title', 'Title of Post') }}</b></p>

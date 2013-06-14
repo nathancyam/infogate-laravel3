@@ -5,12 +5,11 @@
 <?php
     $user = User::find(Auth::user()->id);
     $checkCoord = Event::fire('isCoord', array($user));
+    $title = $course->name;
+    $subtitle = $subject->name;
 ?>
 <div class="container-fluid">
     <div class="row">
-        <div style="float: left;">
-            <h2>Topics for {{ $course->name }}: {{ $subject->name }}</h2>
-        </div>
         @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
         <div style="float: right;">
             {{ Button::primary_link(URL::to_route('newtopic', array($course->code, $subject->code)), 'New Topic') }}

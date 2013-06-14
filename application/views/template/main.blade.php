@@ -7,18 +7,10 @@
     {{ Asset::container('bootstrapper')->scripts() }}
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="hero-unit">
-            <h1>Infogate</h1>
-            <h2>Education Portal</h2>
-        </div>
-        <div class='navbar navbar-inverse'>
-            <div class='navbar-inner nav-collapse' style="height: auto;">
-                <ul class="nav">
-                    <li class="active">
-                        {{ HTML::link(URL::base(), 'Home') }}
-                    </li>
-                </ul>
+    <div class='navbar navbar-inverse navbar-fixed-top'>
+        <div class='navbar-inner nav-collapse' style="height: auto;">
+            <div class='container'>
+                {{ HTML::link(URL::base(), 'Infogate', array("class"=>"brand")) }}
                 <ul class="nav pull-right">
                     <li class="navbar-text pull-right">
                         @if ( Auth::guest() )
@@ -38,15 +30,28 @@
                 </ul>
             </div>
         </div>
-        <div id='content' class='row-fluid'>
-            <nav class='span2 sidebar'>
-                <div data-spy="affix">
-                    @if ( Auth::guest() )
-                    @else
-                        @render('template.navigation')
-                    @endif
-                <div>
-            </nav>
+    </div>
+    <header class="hero-unit">
+        <div class="container">
+            <?php
+            if(isset($title)){
+                echo '<h1>' . $title . '</h1>';
+                echo '<h2>' . $subtitle . '</h2>';
+            } else {
+                echo '<h1>Infogate</h1>';
+                echo '<h2>Education Portal</h2>';
+            }
+           ?>
+        </div>
+    </header>
+    <div id='content' class='container'>
+        <div class='row'>
+            <div class='span2 sidebar'>
+                @if ( Auth::guest() )
+                @else
+                    @render('template.navigation')
+                @endif
+            </div>
             <div class="span10 main">
                 @yield('content')
             </div>

@@ -23,4 +23,4 @@ foreach($subjects as $subject){
 array_push($navArray, array(Navigation::HEADER, 'Help'));
 array_push($navArray, array('Help', URL::to_route('help')));
 
-echo Navigation::lists( Navigation::links($navArray));
+echo Navigation::lists(Navigation::links($navArray), true, array('class'=>'sidenav affix'));

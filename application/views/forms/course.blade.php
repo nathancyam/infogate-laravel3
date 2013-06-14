@@ -1,5 +1,10 @@
 @layout('template.main')
 
+<?php
+    $title = 'Courses';
+    $subtitle = 'Create a course';
+?>
+
 @section('content')
     @if ( $isNew == true )
         {{ Form::open('course/new') }}

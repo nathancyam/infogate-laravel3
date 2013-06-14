@@ -4,12 +4,11 @@
 <?php
     $user = User::find(Auth::user()->id);
     $checkCoord = Event::fire('isCoord', array($user));
+    $title = $code->name;
+    $subtitle = "Subjects";
 ?>
 <div class="container-fluid">
     <div class="row">
-        <div style="float: left;">
-            <h2>Subjects for {{ $code->name }}</h2>
-        </div>
         @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
             <div style="float: right;">
                 {{ Button::primary_link(URL::base() . '/' . $code->code . '/subject/new', 'New Subject')}}

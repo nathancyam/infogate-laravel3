@@ -1,15 +1,14 @@
 @layout('template.main')
 
 @section('content')
+<?php
+    $title = strtoupper($subject);
+    $subtitle = Topic::find($topic)->name;
+?>
 <div class='container-fluid'>
     <div class='row'>
-        <div class='pull-left'>
-            <h2>
-               Draft Posts for {{ strtoupper($subject) }} - {{ Topic::find($topic)->name }}
-            </h2>
-        </div>
         <div class="pull-right">
-            {{ Button::primary_link(URL::to_route('posts', array($course, $subject, $topic)), 'New Post') }}
+            {{ Button::primary_link(URL::to_route('posts', array($course, $subject, $topic)), 'New Draft') }}
         </div>
     </div>
     <div>
