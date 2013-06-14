@@ -8,6 +8,7 @@
 </head>
 <body>
     {{ HTML::style('css/header.css') }}
+    {{ HTML::style('css/affix.css') }}
     <div class='navbar navbar-inverse navbar-fixed-top'>
         <div class='navbar-inner nav-collapse' style="height: auto;">
             <div class='container'>
