@@ -22,4 +22,4 @@ foreach($subjects as $subject){
 array_push($navArray, array(Navigation::HEADER, 'Help'));
 array_push($navArray, array('Help', URL::to_route('help'), false, false, null, 'question-sign'));
 
-echo Navigation::lists(Navigation::links($navArray), true, array('class'=>'sidenav affix'));
+echo Navigation::lists(Navigation::links($navArray), true, array('data-spy'=>'affix', 'data-offset-top'=>'250'));
