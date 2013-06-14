@@ -85,6 +85,8 @@ class Post_Controller extends Base_Controller
     public function action_update($course, $subject, $topic_id, $post_id)
     {
         $updated_post = Post::find($post_id);
+        $updated_post->topic_id = Input::get('topic_id');
+        $updated_post->author_id = Input::get('author_id');
         $updated_post->title = Input::get('title');
         $updated_post->body = Input::get('body');
         $updated_post->links = Input::get('links');

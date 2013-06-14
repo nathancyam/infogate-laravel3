@@ -6,11 +6,11 @@
 ?>
 
 @section('content')
-    {{ Form::hidden('author_id',$user->id) }}
-    {{ Form::hidden('topic_id',$topic->id) }}
 
     @if ($isNew == true)
         {{ Form::open(URL::current()) }}
+            {{ Form::hidden('author_id',$user->id) }}
+            {{ Form::hidden('topic_id',$topic->id) }}
             <p><b>{{ Form::label('title', 'Title of Post') }}</b></p>
             <p>{{ Form::text('title', Input::old('title')) }}</p>
 
@@ -26,6 +26,8 @@
         {{ Form::close() }}
     @else
         {{ Form::open(URL::current(), 'PUT') }}
+            {{ Form::hidden('author_id',$user->id) }}
+            {{ Form::hidden('topic_id',$topic->id) }}
 
             <p><b>{{ Form::label('title', 'Title of Post') }}</b></p>
             <p>{{ Form::text('title', Input::old('title', $post->title)) }}</p>
