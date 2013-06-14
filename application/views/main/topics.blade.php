@@ -21,7 +21,7 @@
             <h3>
                 {{ $topic->name }}
             </h3>
-            <p>{{ $topic->content }}</p>
+            <p>{{ $topic->formatted_content }}</p>
             <p>
                 {{ Button::small_link(URL::to_route('listposts', array($course->code, $subject->code, $topic->id)), 'See posts') }}
                 @if ((Auth::user()->role == 'admin')||($checkCoord[0]))
