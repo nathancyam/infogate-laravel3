@@ -1,13 +1,16 @@
 @layout('template.main')
 
+{{ $title = 'Registration' }}
+{{ $subtitle = 'New User' }}
+
 @section('content')
+    {{ $errors->first('fName', '<p class="error">A forename is required</p>') }}
+    {{ $errors->first('sName', '<p class="error">A surname is required</p>') }}
+    {{ $errors->first('email', '<p class="error">:message</p>') }}
+    {{ $errors->first('password', '<p class="error">:message</p>') }}
+
     @if($isNew == true)
         {{ Form::open(URL::to_action('register@createuser')) }}
-
-        {{ $errors->first('forename', '<p class="error">A forename is required.</p>') }}
-        {{ $errors->first('surname', '<p class="error">A surname is required.</p>') }}
-        {{ $errors->first('email', '<p class="error">A valid e-mail is required.</p>') }}
-        {{ $errors->first('password', '<p class="error">:message</p>') }}
 
         <p>{{ Form::label('forename', 'First Name:') }}</p>
         <p>{{ Form::text('forename', Input::old('forename')) }}</p>
@@ -34,10 +37,6 @@
         {{ Form::close() }}
     @else
         {{ Form::open(URL::to_action('account@postupdate')) }}
-
-        {{ $errors->first('forename', '<p class="error">A forename is required.</p>') }}
-        {{ $errors->first('surname', '<p class="error">A surname is required.</p>') }}
-        {{ $errors->first('email', '<p class="error">A valid e-mail is required.</p>') }}
 
         <p>{{ Form::label('forename', 'First Name:') }}</p>
         <p>{{ Form::text('forename', Input::old('forename', $user->fname)) }}</p>

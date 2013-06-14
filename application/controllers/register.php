@@ -32,7 +32,6 @@ class Register_Controller extends Base_Controller
             'password_confirmation' => 'required|min:5');
         $v = Validator::make($new_user, $rules);
         if($v->fails()){
-            var_dump($v);
             return Redirect::to(URL::to_action('register'))
                 ->with_errors($v)
                 ->with_input();
