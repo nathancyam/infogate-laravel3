@@ -134,6 +134,7 @@ Route::get('(:any)/(:any)/topic/new', array('as'=>'newtopic','uses'=>'topic@new'
 Route::post('(:any)/(:any)/topic/new', array('as'=>'newtopic','uses'=>'topic@add'));
 Route::get('(:any)/(:any)/topic/(:num)/edit', array('as'=>'edittopic','uses'=>'topic@edit'));
 Route::put('(:any)/(:any)/topic/(:num)/edit', array('as'=>'updatetopic', 'uses'=>'topic@update'));
+Route::get('(:any)/(:any)/topic/(:num)/delete', array('as'=>'deletetopic', 'uses'=>'topic@delete'));
 
 // =================== POSTS ===================
 Route::get('(:any)/(:any)/(:any)/posts', array('as'=>'listposts', 'uses'=>'post@index'));

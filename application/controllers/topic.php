@@ -5,7 +5,7 @@ class Topic_Controller extends Base_Controller
     public function __construct(){
         parent::__construct();
         $this->filter('before','auth');
-        $this->filter('before','admin')->only('new','add','edit','update');
+        $this->filter('before','admin')->only('new','add','edit','update','delete');
     }
 
     public function action_index($course, $subject)
@@ -68,6 +68,13 @@ class Topic_Controller extends Base_Controller
         $updated_topic->name = Input::get('name');
         $updated_topic->content = Input::get('content');
         $updated_topic->save();
+        return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
+    }
+
+    public function action_delete($course, $subject, $topic)
+    {
+        Topic::find($topic)->posts()->delete();
+        Topic::find($topic)->delete();
         return Redirect::to(URL::to_route('listtopics', array($course, $subject)));
     }
 }
