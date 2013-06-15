@@ -2,6 +2,4 @@
 .DS_Store
 .ebextensions
 application/config/database.php
-application/config/local/*
-application/config/local/*
-.DS_Store
+application/config/local/
