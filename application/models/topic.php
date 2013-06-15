@@ -4,11 +4,12 @@ class Topic extends Eloquent {
 
     public function subject()
     {
-        return $this->belongs_to('Subject');
+        return $this->belongs_to('Subject','subject_id');
     }
+    
     public function posts()
     {
-        return $this->has_many('Posts');
+        return $this->has_many('Post');
     }
 
     public function get_formatted_content(){

@@ -5,7 +5,7 @@ class Subject_Controller extends Base_Controller
     public function __construct(){
         parent::__construct();
         $this->filter('before','auth');
-        $this->filter('before','admin')->only('add','new','edit','update');
+        $this->filter('before','admin')->only('add','new','edit','update','delete');
     }
 
     public function action_index($course)
@@ -68,6 +68,17 @@ class Subject_Controller extends Base_Controller
         $new_subject->description = Input::get('description');
         $new_subject->code = Input::get('code');
         $new_subject->save();
+        return Redirect::to(URL::to_route('listsubjects', array($course)));
+    }
+
+    public function action_delete($course, $subject_id)
+    {
+        $topics = Subject::find($subject_id)->topics()->get();
+        foreach($topics as $topic){
+            $topic->posts()->delete();
+        }
+        Subject::find($subject_id)->topics()->delete();
+        Subject::find($subject_id)->delete();
         return Redirect::to(URL::to_route('listsubjects', array($course)));
     }
 }

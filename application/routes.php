@@ -2,20 +2,7 @@
 
 Route::get('/', function()
 {
-    $imgGallery = array();
-    array_push($imgGallery, array('image'=>'img/carousel-image-library',
-                    'label'=>'Learning Materials Everywhere',
-                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
-    array_push($imgGallery, array('image'=>'img/carousel-image-sharing',
-                    'label'=>'Learning Materials Everywhere',
-                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
-    array_push($imgGallery, array('image'=>'img/carousel-image-table',
-                    'label'=>'Learning Materials Everywhere',
-                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
-    $imgGallery = array('what'=>'what');
-    var_dump($imgGallery);
-    return View::make('home.index')
-        ->with('gallery', $imgGallery);
+    return View::make('home.index');
 });
 
 Event::listen('404', function()
@@ -139,6 +126,7 @@ Route::get('(:any)/subject/new', array('as'=>'newsubject', 'uses'=>'subject@new'
 Route::post('(:any)/subject/new', array('as'=>'addsubject', 'uses'=>'subject@add'));
 Route::get('(:any)/subject/(:any)/edit', array('as'=>'editsubject', 'uses'=>'subject@edit'));
 Route::put('(:any)/subject/(:any)/edit', array('as'=>'updatesubject', 'uses'=>'subject@update'));
+Route::get('(:any)/subject/(:any)/delete', array('as'=>'deletesubject', 'uses'=>'subject@delete'));
 
 // =================== TOPICS ===================
 Route::get('(:any)/(:any)/topics', array('as'=>'listtopics', 'uses'=>'topic@index'));
