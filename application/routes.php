@@ -2,7 +2,20 @@
 
 Route::get('/', function()
 {
-	return View::make('home.index');
+    $imgGallery = array();
+    array_push($imgGallery, array('image'=>'img/carousel-image-library',
+                    'label'=>'Learning Materials Everywhere',
+                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
+    array_push($imgGallery, array('image'=>'img/carousel-image-sharing',
+                    'label'=>'Learning Materials Everywhere',
+                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
+    array_push($imgGallery, array('image'=>'img/carousel-image-table',
+                    'label'=>'Learning Materials Everywhere',
+                    'caption'=>'Learning materials found by anyone, shared for everyone.'));
+    $imgGallery = array('what'=>'what');
+    var_dump($imgGallery);
+    return View::make('home.index')
+        ->with('gallery', $imgGallery);
 });
 
 Event::listen('404', function()
